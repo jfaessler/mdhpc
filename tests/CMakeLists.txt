@@ -14,23 +14,23 @@ FetchContent_MakeAvailable(googletest)
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 # Define headers and test implementation files
-set(MY_TESTS_HEADERS
+set(TESTS_HEADERS
   # empty so far
 )
 
-set(MY_TESTS_CPP
+set(TESTS_CPP
   test_hello_world.cpp
   test_verlet.cpp
 )
 
 # Creating the test executable
-add_executable(my_tests ${MY_TESTS_CPP} ${MY_TESTS_HEADERS})
+add_executable(tests ${TESTS_CPP} ${TESTS_HEADERS})
 
 # Linking against GTest and our MD code
-target_link_libraries(my_tests PUBLIC my_md_lib gtest gtest_main)
+target_link_libraries(tests PUBLIC md_lib gtest gtest_main)
 
 # Discover Google tests
-gtest_discover_tests(my_tests)
+gtest_discover_tests(tests)
 
 # For tests that do not use GTest
 # add_test(NAME <test name> COMMAND <test executable>)
