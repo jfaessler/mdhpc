@@ -6,6 +6,7 @@ set(MY_MD_HEADERS
 # List of implementation files
 set(MY_MD_CPP
   hello.cpp
+  verlet.cpp
 )
 
 # Create a static library

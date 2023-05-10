@@ -1,4 +1,5 @@
 add_subdirectory(01)
+add_subdirectory(02)
 
 # Future milestones
  add_subdirectory(04)

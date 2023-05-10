@@ -8,6 +8,7 @@
 
 
 int main(int argc, char *argv[]) {
+    Eigen::Vector3cd test;
     int rank = 0, size = 1;
 
     // Below is some MPI code, try compiling with `cmake -DUSE_MPI=ON ..`
