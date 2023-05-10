@@ -4,7 +4,7 @@ include(FetchContent)
 
 # Define project info
 project(
-  my_md_code
+  md_code
   VERSION 0.0.1
   LANGUAGES CXX
   DESCRIPTION
