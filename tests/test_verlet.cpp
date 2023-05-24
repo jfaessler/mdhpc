@@ -1,7 +1,7 @@
 #include "verlet.h"
 #include <gtest/gtest.h>
 
-TEST(VerletSingleTest, BasicAssertions) {
+TEST(VerletTest, Single) {
     const int steps = 10;
     const double timestep = 1;
     double x = 0;
@@ -23,7 +23,7 @@ TEST(VerletSingleTest, BasicAssertions) {
     }
 }
 
-TEST(VerletTest, BasicAssertions) {
+TEST(VerletTest, Multiple) {
     const int steps = 10;
     const double timestep = 1;
     int nb_atoms = 10;
