@@ -1,8 +1,8 @@
-#ifndef VERLET_H
-#define VERLET_H
+#ifndef HELLO_H
+#define HELLO_H
 
 
 void hello_eigen();
 
 
-#endif // __VERLET_H
+#endif // __HELLO_H
