@@ -9,6 +9,8 @@ class Atoms {
     Velocities_t velocities;
     Forces_t forces;
 
+    explicit Atoms(int nb_atoms);
+
     explicit Atoms(const Positions_t &p);
 
     Atoms(const Positions_t &p, const Velocities_t &v);
