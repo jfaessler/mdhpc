@@ -24,5 +24,5 @@ double lj_direct_summation(Atoms &atoms, double epsilon, double sigma) {
             atoms.forces(Eigen::all, j) -= force;
         }
     }
-    return pairwise_pot / 2; // Don't count self
+    return pairwise_pot;
 }
