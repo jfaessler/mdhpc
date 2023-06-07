@@ -1,16 +1,23 @@
 # List of headers
-set(MD_HEADERS
+set(
+        MD_HEADERS
         atoms.h
         hello.h
         types.h
         verlet.h
-        )
+        xyz.h
+)
 
 # List of implementation files
-set(MD_CPP
+set(
+        MD_CPP
         hello.cpp
         verlet.cpp
-        atoms.cpp lj_direct_summation.cpp lj_direct_summation.h)
+        atoms.cpp
+        lj_direct_summation.cpp
+        lj_direct_summation.h
+        xyz.cpp
+)
 
 # Create a static library
 add_library(md_lib STATIC ${MD_CPP} ${MD_HEADERS})

@@ -7,5 +7,6 @@ using Positions_t = Eigen::Array3Xd;
 using Velocities_t = Eigen::Array3Xd;
 using Forces_t = Eigen::Array3Xd;
 using Scalar_t = double;
+using Names_t = std::vector<std::basic_string<char>>;
 
 #endif // MD_CODE_TYPES_H
