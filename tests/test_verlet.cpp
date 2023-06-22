@@ -14,12 +14,9 @@ TEST(VerletTest, Single) {
     double fy = 2;
     double fz = 2;
     for (int i = 0; i < steps; ++i) {
-//        std::cout << "Step: " << i << std::endl;
         verlet_step1(x,y,z,vx,vy,vz,fx,fy,fz,timestep);
 //        ... compute forces here ...
         verlet_step2(x,y,z,vx,vy,vz,timestep);
-//        std::cout << "position: " << x << ',' << y << ',' << z << ' '
-//                  << "velocity: " << vx << ',' << vy << ',' << vz << std::endl;
     }
 }
 
@@ -55,8 +52,5 @@ TEST(VerletTest, Multiple) {
             EXPECT_NEAR(item, forces.reshaped()[j] * t +v0.reshaped()[j], 1e-6);
             j++;
         }
-//        std::cout << "Positions: " << std::endl << positions << std::endl;
-//        std::cout << "Velocities: " << std::endl << velocities << std::endl;
-//        std::cout << "Forces: " << std::endl << forces << std::endl;
     }
 }

@@ -16,5 +16,5 @@ void hello_eigen() {
         value += 1.;
 
     // Output matrix values
-    std::cout << m << std::endl;
+//    std::cout << m << std::endl;
 }
