@@ -1,7 +1,7 @@
 # CMake base setup
 cmake_minimum_required(VERSION 3.14)
 include(FetchContent)
-
+cmake_policy(SET CMP0135 NEW) # weird warning
 # Define project info
 project(
   md_code
@@ -30,6 +30,7 @@ if(NOT Eigen3_FOUND)
     Eigen3
     URL https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz
     URL_HASH SHA256=8586084f71f9bde545ee7fa6d00288b264a2b7ac3607b974e54d13e7162c1c72
+    DOWNLOAD_EXTRACT_TIMESTAMP true
   )
 
   # We are not using FetchContent_MakeAvailable since that pulls in all
