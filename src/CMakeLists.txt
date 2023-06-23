@@ -19,7 +19,7 @@ set(
         neighbors.cpp
         verlet.cpp
         xyz.cpp
-        lj.cpp)
+        lj.cpp thermostat.cpp thermostat.h)
 
 # Create a static library
 add_library(md_lib STATIC ${MD_CPP} ${MD_HEADERS})
