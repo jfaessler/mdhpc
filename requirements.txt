@@ -1,3 +1,4 @@
 matplotlib
 numpy
 pyqt5
+scipy
