@@ -9,6 +9,10 @@ class Atoms {
     Velocities_t velocities;
     Forces_t forces;
 
+    // Default to LB units
+    double mass = 1;
+    double k_b = 1;
+
     explicit Atoms(int nb_atoms);
 
     explicit Atoms(const Positions_t &p);

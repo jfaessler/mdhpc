@@ -18,5 +18,5 @@ TEST(ThermostatTest, Equilibruim) {
     for (int i = 0; i < 100; i++) {
         berendsen_thermostat(atoms, 3, 0.01, 0.1);
     }
-    EXPECT_NEAR(atoms_temperature(atoms), 3, 0.001);
+    EXPECT_NEAR(temperature(atoms), 3, 0.001);
 }

@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
             write_xyz(traj, atoms);
             auto kinetic = Eigen::pow(atoms.velocities, 2).sum() / 2;
             std::cout << (i + 1) * timestep << "," << pot + kinetic << ","
-                      << pot << "," << kinetic << "," << atoms_temperature(atoms) << std::endl;
+                      << pot << "," << kinetic << "," << temperature(atoms) << std::endl;
         }
     }
 
