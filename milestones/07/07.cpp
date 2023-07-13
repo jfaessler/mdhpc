@@ -9,9 +9,9 @@
 
 int main(int argc, char *argv[]) {
     constexpr double timestep = 5.0;
-    constexpr int steps = 10000;
+    constexpr int steps = 2000;
 
-    constexpr int snapshot_interval = steps / 100; // 100 total frames
+    constexpr int snapshot_interval = steps / 1000; // 100 total frames
     // TODO set according to time accumulated
 
     std::ofstream traj("traj.xyz");
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     neighborList.update(atoms, cutoff);
 
     double target_temp = 0.0;
-    const double relaxation = 1000;
+    const double relaxation = 100;
 
     std::cout << "Step,Time,Total Energy,Potential,Kinetic,Temperature" << std::endl;
     std::cout.precision(10);
@@ -39,21 +39,32 @@ int main(int argc, char *argv[]) {
         verlet_step2(atoms.velocities, atoms.forces, timestep, atoms.mass);
         berendsen_thermostat(atoms, target_temp, timestep, relaxation);
 
-        if (i == 1000) {
+        if (i == 100) {
             target_temp = 500;
         }
-        if (i == 3000) {
+        if (i == 300) {
             target_temp = 600;
         }
 
-        if (i == 5000) {
+        if (i == 500) {
             target_temp = 650;
         }
 
-        if (i == 7000) {
+        if (i == 700) {
             target_temp = 700;
         }
 
+        if (i == 900) {
+            target_temp = 725;
+        }
+
+        if (i == 1100) {
+            target_temp = 750;
+        }
+
+        if (i == 1200) {
+            target_temp = 800;
+        }
         if (i % snapshot_interval == 0) {
             write_xyz(traj, atoms);
             auto kinetic = kinetic_energy(atoms);
