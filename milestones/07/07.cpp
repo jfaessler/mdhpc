@@ -8,7 +8,7 @@
 
 
 int main(int argc, char *argv[]) {
-    constexpr double timestep = 0.01;
+    constexpr double timestep = 5.;
     constexpr int steps = 10000;
 
     constexpr int snapshot_interval = steps / 100; // 100 total frames
@@ -20,6 +20,7 @@ int main(int argc, char *argv[]) {
     auto [names, init_positions]{read_xyz("cluster_923.xyz")};
     Atoms atoms(init_positions);
     atoms.mass = 20413.15887; // Mass system's mass units where g/mol = 0.009649
+    atoms.k_b = 8.617333262e-5; // Boltzmann constant in eV/K
 
     const double cutoff = 10.0; // Default cutoff from ducastelle
     NeighborList neighborList;
@@ -27,8 +28,8 @@ int main(int argc, char *argv[]) {
 
     write_xyz(traj, atoms);
 
-    const double target_temp = 0.01;
-    const double relaxation = .1;
+//    const double target_temp = 0.01;
+//    const double relaxation = .1;
 
     std::cout << "Time,Total Energy,Potential,Kinetic,Temperature" << std::endl;
     std::cout.precision(10);
@@ -38,11 +39,11 @@ int main(int argc, char *argv[]) {
         neighborList.update(atoms, cutoff);
         double pot = ducastelle(atoms, neighborList, cutoff);
         verlet_step2(atoms.velocities, atoms.forces, timestep);
-        berendsen_thermostat(atoms, target_temp, timestep, relaxation);
+//        berendsen_thermostat(atoms, target_temp, timestep, relaxation);
 
         if (i % snapshot_interval == 0) {
             write_xyz(traj, atoms);
-            auto kinetic = Eigen::pow(atoms.velocities, 2).sum() / 2;
+            auto kinetic = kinetic_energy(atoms);
             std::cout << (i + 1) * timestep << "," << pot + kinetic << ","
                       << pot << "," << kinetic << "," << temperature(atoms) << std::endl;
             ts << (i + 1) * timestep << ","
