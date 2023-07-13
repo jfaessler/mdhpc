@@ -8,7 +8,7 @@
 int main(int argc, char *argv[]) {
     const double timestep = 0.001;
     const int steps = 30000;
-    const int snapshot_interval = 10000;
+    const int snapshot_interval = 100;
 
     const double epsilon = 1.0;
     const double sigma = 1.0;

@@ -8,7 +8,7 @@
 
 
 int main(int argc, char *argv[]) {
-    constexpr double timestep = 5.;
+    constexpr double timestep = 5.0;
     constexpr int steps = 10000;
 
     constexpr int snapshot_interval = steps / 100; // 100 total frames
@@ -26,25 +26,38 @@ int main(int argc, char *argv[]) {
     NeighborList neighborList;
     neighborList.update(atoms, cutoff);
 
-    write_xyz(traj, atoms);
+    double target_temp = 0.0;
+    const double relaxation = 1000;
 
-//    const double target_temp = 0.01;
-//    const double relaxation = .1;
-
-    std::cout << "Time,Total Energy,Potential,Kinetic,Temperature" << std::endl;
+    std::cout << "Step,Time,Total Energy,Potential,Kinetic,Temperature" << std::endl;
     std::cout.precision(10);
     ts.precision(10);
     for (int i = 0; i < steps; ++i) {
-        verlet_step1(atoms.positions, atoms.velocities, atoms.forces, timestep);
+        verlet_step1(atoms.positions, atoms.velocities, atoms.forces, timestep, atoms.mass);
         neighborList.update(atoms, cutoff);
         double pot = ducastelle(atoms, neighborList, cutoff);
-        verlet_step2(atoms.velocities, atoms.forces, timestep);
-//        berendsen_thermostat(atoms, target_temp, timestep, relaxation);
+        verlet_step2(atoms.velocities, atoms.forces, timestep, atoms.mass);
+        berendsen_thermostat(atoms, target_temp, timestep, relaxation);
+
+        if (i == 1000) {
+            target_temp = 500;
+        }
+        if (i == 3000) {
+            target_temp = 600;
+        }
+
+        if (i == 5000) {
+            target_temp = 650;
+        }
+
+        if (i == 7000) {
+            target_temp = 700;
+        }
 
         if (i % snapshot_interval == 0) {
             write_xyz(traj, atoms);
             auto kinetic = kinetic_energy(atoms);
-            std::cout << (i + 1) * timestep << "," << pot + kinetic << ","
+            std::cout << i << "," << (i) * timestep << "," << pot + kinetic << ","
                       << pot << "," << kinetic << "," << temperature(atoms) << std::endl;
             ts << (i + 1) * timestep << ","
                << pot + kinetic << std::endl;

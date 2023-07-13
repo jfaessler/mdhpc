@@ -20,11 +20,11 @@ void verlet_step2(double &vx, double &vy, double &vz, double fx,
     vz += .5 * fz * timestep;
 }
 void verlet_step1(Positions_t &positions, Velocities_t &velocities,
-                  const Velocities_t &forces, Scalar_t timestep) {
-    velocities += .5 * forces * timestep;
+                  const Velocities_t &forces, Scalar_t timestep, Scalar_t mass) {
+    velocities += .5 * forces / mass * timestep;
     positions += velocities * timestep;
 }
 void verlet_step2(Velocities_t &velocities, const Forces_t &forces,
-                  Scalar_t timestep) {
-    velocities += .5 * forces * timestep;
+                  Scalar_t timestep, Scalar_t mass) {
+    velocities += .5 * forces / mass * timestep;
 }

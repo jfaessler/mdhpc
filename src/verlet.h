@@ -9,7 +9,7 @@ void verlet_step2(double &vx, double &vy, double &vz, double fx, double fy, doub
                   double timestep);
 
 void verlet_step1(Positions_t &positions, Velocities_t &velocities,
-                  const Velocities_t &forces, Scalar_t timestep);
-void verlet_step2(Velocities_t &velocities, const Forces_t &forces, Scalar_t timestep);
+                  const Velocities_t &forces, Scalar_t timestep, Scalar_t mass = 1.);
+void verlet_step2(Velocities_t &velocities, const Forces_t &forces, Scalar_t timestep, Scalar_t mass = 1.);
 
 #endif // __VERLET_H
