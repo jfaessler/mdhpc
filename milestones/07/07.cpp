@@ -10,6 +10,14 @@
 int main(int argc, char *argv[]) {
     constexpr double timestep = 3.0;
     constexpr int steps = 100000;
+    constexpr double eq_temp = 30.0;
+    constexpr int eq_steps = 6000;
+    constexpr int eq_relax = 10.0;
+    constexpr double post_eq_relax = 4000;
+    constexpr int tau_relax = 5000;
+    constexpr double initial_heating = 500;
+    constexpr double cycle_increase = 50.0;
+
 
     constexpr int snapshot_interval = steps / 1000; // 1000 total frames
     // TODO set according to time accumulated
@@ -17,7 +25,7 @@ int main(int argc, char *argv[]) {
     std::ofstream traj("traj.xyz");
     std::ofstream ts(std::to_string(timestep) + ".timestep");
 
-    auto [names, init_positions]{read_xyz("cluster_923.xyz")};
+    auto [names, init_positions]{read_xyz("cluster_3871.xyz")};
     Atoms atoms(init_positions);
     atoms.mass = 20413.15887; // Mass system's mass units where g/mol = 0.009649
     atoms.k_b = 8.617333262e-5; // Boltzmann constant in eV/K
@@ -26,9 +34,8 @@ int main(int argc, char *argv[]) {
     NeighborList neighborList;
     neighborList.update(atoms, cutoff);
 
-    double target_temp = 30.0;
-    double relaxation = 10;
-
+    double target_temp = eq_temp;
+    double relaxation = eq_relax;
     const int s = 5000; // Scale for setting new temp value
 
     std::cout << "Step,Time,Total Energy,Potential,Kinetic,Temperature" << std::endl;

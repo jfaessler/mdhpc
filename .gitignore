@@ -1,5 +1,6 @@
 # Custom files here
 *.xyz
+*.csv
 .idea
 
 # -------------- Below are genereated exclusion patterns ----------------------
