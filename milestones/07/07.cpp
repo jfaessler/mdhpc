@@ -17,6 +17,9 @@ int main(int argc, char *argv[]) {
     constexpr int tau_relax = 5000;
     constexpr double initial_heating = 500;
     constexpr double cycle_increase = 50.0;
+    // TODO heating cycles should not use berendensen thermostat!
+    // Rescale for a certain change in kinetic, then let it wait for 1000
+    // And take the average for the last like 500 to let it equilibriate
 
 
     constexpr int snapshot_interval = steps / 1000; // 1000 total frames
