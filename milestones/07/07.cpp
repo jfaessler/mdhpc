@@ -8,10 +8,10 @@
 
 
 int main(int argc, char *argv[]) {
-    constexpr double timestep = 1.0;
-    constexpr int steps = 8000;
+    constexpr double timestep = 2.0;
+    constexpr int steps = 40000;
 
-    constexpr int snapshot_interval = steps / 100; // 100 total frames
+    constexpr int snapshot_interval = steps / 200; // 200 total frames
     // TODO set according to time accumulated
 
     std::ofstream traj("traj.xyz");
@@ -27,9 +27,9 @@ int main(int argc, char *argv[]) {
     neighborList.update(atoms, cutoff);
 
     double target_temp = 100.0;
-    const double relaxation = 1000;
+    double relaxation = 10;
 
-    const int s = 800; // Scale for setting new temp value
+    const int s = 5000; // Scale for setting new temp value
 
     std::cout << "Step,Time,Total Energy,Potential,Kinetic,Temperature" << std::endl;
     std::cout.precision(10);
@@ -43,6 +43,7 @@ int main(int argc, char *argv[]) {
             berendsen_thermostat(atoms, target_temp, timestep, relaxation);
 
         if (i == s) {
+            relaxation = 3000;
             target_temp = 500;
         }
         if (i == 3 * s) {
