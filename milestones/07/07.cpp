@@ -8,10 +8,10 @@
 
 
 int main(int argc, char *argv[]) {
-    constexpr double timestep = 2.0;
-    constexpr int steps = 40000;
+    constexpr double timestep = 3.0;
+    constexpr int steps = 80000;
 
-    constexpr int snapshot_interval = steps / 200; // 200 total frames
+    constexpr int snapshot_interval = steps / 400; // 400 total frames
     // TODO set according to time accumulated
 
     std::ofstream traj("traj.xyz");
@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     NeighborList neighborList;
     neighborList.update(atoms, cutoff);
 
-    double target_temp = 100.0;
+    double target_temp = 30.0;
     double relaxation = 10;
 
     const int s = 5000; // Scale for setting new temp value
@@ -39,40 +39,36 @@ int main(int argc, char *argv[]) {
         neighborList.update(atoms, cutoff);
         double pot = ducastelle(atoms, neighborList, cutoff);
         verlet_step2(atoms.velocities, atoms.forces, timestep, atoms.mass);
-        if ((i / s) % 2 == 0)
+        if (i / s % 2 == 0)
             berendsen_thermostat(atoms, target_temp, timestep, relaxation);
 
-        if (i == s) {
+        switch (i) {
+        case s:
             relaxation = 3000;
             target_temp = 500;
-        }
-        if (i == 3 * s) {
+            break;
+        case 3 * s:
             target_temp = 600;
-        }
-
-        if (i == 5 * s) {
+            break;
+        case 5 * s:
             target_temp = 650;
-        }
-
-        if (i == 7 * s) {
+            break;
+        case 7 * s:
             target_temp = 700;
-        }
-
-        if (i == 9 * s) {
-            target_temp = 725;
-        }
-
-        if (i == 11 * s) {
+            break;
+        case 9 * s:
             target_temp = 750;
-        }
-
-        if (i == 12 * s) {
+            break;
+        case 11 * s:
             target_temp = 800;
+            break;
+        case 13 * s:
+            target_temp = 850;
+            break;
+        default:
+            break;
         }
 
-        if (i == 14 * s) {
-            target_temp = 900;
-        }
         if (i % snapshot_interval == 0) {
             write_xyz(traj, atoms);
             auto kinetic = kinetic_energy(atoms);
