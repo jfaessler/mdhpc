@@ -9,9 +9,9 @@
 
 int main(int argc, char *argv[]) {
     constexpr double timestep = 3.0;
-    constexpr int steps = 80000;
+    constexpr int steps = 100000;
 
-    constexpr int snapshot_interval = steps / 400; // 400 total frames
+    constexpr int snapshot_interval = steps / 1000; // 1000 total frames
     // TODO set according to time accumulated
 
     std::ofstream traj("traj.xyz");
@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
 
         switch (i) {
         case s:
-            relaxation = 3000;
+            relaxation = 4000;
             target_temp = 500;
             break;
         case 3 * s:
