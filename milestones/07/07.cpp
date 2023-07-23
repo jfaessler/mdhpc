@@ -8,15 +8,13 @@
 
 
 int main(int argc, char *argv[]) {
-    constexpr double timestep = 3.0;
-    constexpr int steps = 100000;
-    constexpr double eq_temp = 30.0;
-    constexpr int eq_steps = 6000;
-    constexpr int eq_relax = 10.0;
-    constexpr double post_eq_relax = 4000;
-    constexpr int tau_relax = 5000;
-    constexpr double initial_heating = 500;
-    constexpr double cycle_increase = 50.0;
+    constexpr double timestep = 15.0;
+    constexpr int steps = 52001;
+    constexpr double eq_temp = 500.0;
+    constexpr int eq_steps = 2000;
+    constexpr int eq_relax = 10.0; // Set to very low value to equilibrate the system
+    constexpr int tau_relax = 25;
+    constexpr double delta_q = 1.0; // Increase in temperature per heating cycle
     // TODO heating cycles should not use berendensen thermostat!
     // Rescale for a certain change in kinetic, then let it wait for 1000
     // And take the average for the last like 500 to let it equilibriate
@@ -28,56 +26,56 @@ int main(int argc, char *argv[]) {
     std::ofstream traj("traj.xyz");
     std::ofstream ts(std::to_string(timestep) + ".timestep");
 
-    auto [names, init_positions]{read_xyz("cluster_3871.xyz")};
+    auto [names, init_positions]{read_xyz("cluster_923.xyz")};
     Atoms atoms(init_positions);
-    atoms.mass = 20413.15887; // Mass system's mass units where g/mol = 0.009649
+    atoms.mass = 20413.15887; // Gold in system's mass units where g/mol = 0.009649
     atoms.k_b = 8.617333262e-5; // Boltzmann constant in eV/K
 
     const double cutoff = 5.0; // Default cutoff from ducastelle
     NeighborList neighborList;
     neighborList.update(atoms, cutoff);
 
-    double target_temp = eq_temp;
-    double relaxation = eq_relax;
-    const int s = 5000; // Scale for setting new temp value
-
     std::cout << "Step,Time,Total Energy,Potential,Kinetic,Temperature" << std::endl;
     std::cout.precision(10);
     ts.precision(10);
+
+    std::vector<double> average_temp;
+    double temp_totals = 0;
     for (int i = 0; i < steps; ++i) {
         verlet_step1(atoms.positions, atoms.velocities, atoms.forces, timestep, atoms.mass);
         neighborList.update(atoms, cutoff);
         double pot = ducastelle(atoms, neighborList, cutoff);
         verlet_step2(atoms.velocities, atoms.forces, timestep, atoms.mass);
-        if (i / s % 2 == 0)
-            berendsen_thermostat(atoms, target_temp, timestep, relaxation);
+        if (i < eq_steps)
+            berendsen_thermostat(atoms, eq_temp, timestep, eq_relax);
+        else {
+            int cycle = (i - eq_steps) % (tau_relax * 2);
+            if (cycle == 0) {
+                double current_temp;
+                // Deposit energy into the system, take average
+                if (i != eq_steps) {
+                    average_temp.emplace_back(temp_totals / tau_relax);
+                    current_temp = average_temp.back();
+                    temp_totals = 0;
+                } else {
+                    current_temp = eq_temp;
+                }
 
-        switch (i) {
-        case s:
-            relaxation = 4000;
-            target_temp = 500;
-            break;
-        case 3 * s:
-            target_temp = 600;
-            break;
-        case 5 * s:
-            target_temp = 650;
-            break;
-        case 7 * s:
-            target_temp = 700;
-            break;
-        case 9 * s:
-            target_temp = 750;
-            break;
-        case 11 * s:
-            target_temp = 800;
-            break;
-        case 13 * s:
-            target_temp = 850;
-            break;
-        default:
-            break;
+                // Deposit kinetic energy into the system via velocity rescaling
+//                std::cout << kinetic_energy(atoms) << " ";
+                std::cout << temperature(atoms) << " ";
+                atoms.velocities *= sqrt((current_temp + delta_q) / current_temp);
+                std::cout << sqrt((current_temp + delta_q) / current_temp) << " ";
+//                std::cout << kinetic_energy(atoms);
+                std::cout << temperature(atoms) << " ";
+                std::cout << std::endl;
+            } else if (cycle >= tau_relax) {
+                // Measure numerator of average temperature,
+                // making sure we have relaxed to let the system settle first
+                temp_totals += temperature(atoms);
+            }
         }
+
 
         if (i % snapshot_interval == 0) {
             write_xyz(traj, atoms);
@@ -87,6 +85,11 @@ int main(int argc, char *argv[]) {
             ts << (i + 1) * timestep << ","
                << pot + kinetic << std::endl;
         }
+    }
+
+    std::cout << "Average temperature" << std::endl;
+    for (const auto& temp : average_temp) {
+        std::cout << temp << std::endl;
     }
 
     traj.close();
