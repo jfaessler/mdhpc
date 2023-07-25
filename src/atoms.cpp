@@ -44,8 +44,8 @@ Atoms::Atoms(const Positions_t &p, double atom_mass)
 }
 
 void Atoms::resize(int i) {
-    positions.conservativeResize(3, i);
-    velocities.conservativeResize(3, i);
-    forces.conservativeResize(3, i);
+    positions.conservativeResize(Eigen::NoChange, i);
+    velocities.conservativeResize(Eigen::NoChange, i);
+    forces.conservativeResize(Eigen::NoChange, i);
     masses.conservativeResize(i);
 }
