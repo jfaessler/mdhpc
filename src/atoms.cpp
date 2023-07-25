@@ -37,7 +37,6 @@ Atoms::Atoms(const Positions_t &p, double atom_mass)
       forces{3, p.cols()},
       masses{p.cols()},
       mass(atom_mass) {
-    positions.setZero();
     velocities.setZero();
     forces.setZero();
     masses.setConstant(mass);

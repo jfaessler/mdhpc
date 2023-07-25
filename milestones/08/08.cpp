@@ -31,19 +31,18 @@ int main(int argc, char *argv[]) {
         20413.15887; // Gold in system's mass units where g/mol = 0.009649
     Atoms atoms(init_positions, gold_mass);
     atoms.k_b = 8.617333262e-5; // Boltzmann constant in eV/K
-    Domain domain(MPI_COMM_WORLD, {30, 30, 30}, {2, 2, 1}, {0, 0, 0});
+    Domain domain(MPI_COMM_WORLD, {15, 15, 30}, {2, 2, 1}, {0, 0, 0});
     domain.enable(atoms);
     domain.exchange_atoms(atoms);
     domain.update_ghosts(atoms, 2 * cutoff);
+    std::cout << domain.nb_local() << " atoms for rank " << rank << std::endl;
 
     for (int i = 0; i < steps; i++) {
         // TODO masses???
         verlet_step1(atoms.positions, atoms.velocities, atoms.forces, timestep, atoms.mass);
         domain.exchange_atoms(atoms);
         domain.update_ghosts(atoms, 2 * cutoff);
-        std::cout << "Rank " << rank << " is alive before neighbors" << std::endl;
         neighborList.update(atoms, cutoff);
-        std::cout << "Rank " << rank << " is alive after neighbors" << std::endl;
         double pot = ducastelle(atoms, neighborList, cutoff);
         verlet_step2(atoms.velocities, atoms.forces, timestep, atoms.mass);
 
