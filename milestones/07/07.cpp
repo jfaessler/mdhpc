@@ -13,14 +13,14 @@ int main(int argc, char *argv[]) {
     constexpr double eq_temp = 500.0;
     constexpr int eq_steps = 2000;
     constexpr int eq_relax = 10.0; // Set to very low value to equilibrate the system
-    constexpr int tau_relax = 25;
-    constexpr double delta_q = 1.0; // Increase in temperature per heating cycle
+    constexpr int tau_relax = 50;
+    constexpr double delta_q = 4.0; // Increase in temperature per heating cycle
     // TODO heating cycles should not use berendensen thermostat!
     // Rescale for a certain change in kinetic, then let it wait for 1000
     // And take the average for the last like 500 to let it equilibriate
 
 
-    constexpr int snapshot_interval = steps / 1000; // 1000 total frames
+    constexpr int snapshot_interval = steps / 100; // 100 total frames
     // TODO set according to time accumulated
 
     std::ofstream traj("traj.xyz");
@@ -62,13 +62,7 @@ int main(int argc, char *argv[]) {
                 }
 
                 // Deposit kinetic energy into the system via velocity rescaling
-//                std::cout << kinetic_energy(atoms) << " ";
-                std::cout << temperature(atoms) << " ";
                 atoms.velocities *= sqrt((current_temp + delta_q) / current_temp);
-                std::cout << sqrt((current_temp + delta_q) / current_temp) << " ";
-//                std::cout << kinetic_energy(atoms);
-                std::cout << temperature(atoms) << " ";
-                std::cout << std::endl;
             } else if (cycle >= tau_relax) {
                 // Measure numerator of average temperature,
                 // making sure we have relaxed to let the system settle first

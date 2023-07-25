@@ -41,6 +41,12 @@ def energy_time(report: Run):
     plt.plot(report.data['Step'], report.data['Temperature'])
     plt.show()
 
+def temperature_step(report: Run, step_scale = 50):
+    y = report.data['Temperature']
+    x = np.arange(len(y)) * step_scale
+    plt.plot(x, y)
+    plt.show()
+
 
 if __name__ == '__main__':
     files = []
@@ -51,4 +57,5 @@ if __name__ == '__main__':
     for filename in files:
         reports.append(Run(filename))
     for report in reports:
-        energy_time(report)
+        # energy_time(report)
+        temperature_step(report)
