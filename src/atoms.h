@@ -8,6 +8,7 @@ class Atoms {
     Positions_t positions;
     Velocities_t velocities;
     Forces_t forces;
+    Masses_t masses;
 
     // Default to LB units
     double mass = 1;
@@ -19,7 +20,10 @@ class Atoms {
 
     Atoms(const Positions_t &p, const Velocities_t &v);
 
-    [[nodiscard]] size_t nb_atoms() const;
+    Atoms(const Positions_t &p, double atom_mass);
+
+    [[nodiscard]] Eigen::Index nb_atoms() const;
+    void resize(int i);
 };
 
 #endif // MD_CODE_ATOMS_H

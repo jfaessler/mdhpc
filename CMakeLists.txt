@@ -53,9 +53,12 @@ endif()
 # Option to turn ON/OFF MPI
 option(USE_MPI "Activate MPI")
 
+set(USE_MPI ON)
+
 # Find MPI if requested
 if(USE_MPI)
   find_package(MPI 3 REQUIRED)
+  include_directories(SYSTEM ${MPI_INCLUDE_PATH})
 endif()
 
 add_subdirectory(src)         # Contains our MD library

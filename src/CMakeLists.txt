@@ -8,7 +8,11 @@ set(
         types.h
         verlet.h
         xyz.h
-        lj.h)
+        lj.h
+        mpi_support.h
+        thermostat.h
+        domain.h
+)
 
 # List of implementation files
 set(
@@ -19,7 +23,11 @@ set(
         neighbors.cpp
         verlet.cpp
         xyz.cpp
-        lj.cpp thermostat.cpp thermostat.h ducastelle.cpp)
+        lj.cpp
+        thermostat.cpp
+        ducastelle.cpp
+        domain.cpp
+)
 
 # Create a static library
 add_library(md_lib STATIC ${MD_CPP} ${MD_HEADERS})

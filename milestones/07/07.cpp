@@ -27,8 +27,8 @@ int main(int argc, char *argv[]) {
     std::ofstream ts(std::to_string(timestep) + ".timestep");
 
     auto [names, init_positions]{read_xyz("cluster_923.xyz")};
-    Atoms atoms(init_positions);
-    atoms.mass = 20413.15887; // Gold in system's mass units where g/mol = 0.009649
+    double gold_mass = 20413.15887; // Gold in system's mass units where g/mol = 0.009649
+    Atoms atoms(init_positions, gold_mass);
     atoms.k_b = 8.617333262e-5; // Boltzmann constant in eV/K
 
     const double cutoff = 5.0; // Default cutoff from ducastelle
