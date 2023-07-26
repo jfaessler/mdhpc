@@ -5,6 +5,7 @@
 #include "verlet.h"
 #include "ducastelle.h"
 #include "thermostat.h"
+#include <iostream>
 
 int main(int argc, char *argv[]) {
     MPI_Init(&argc, &argv);

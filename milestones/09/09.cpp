@@ -1,3 +1,4 @@
+#include <iostream>
 #include "domain.h"
 #include "mpi.h"
 #include "neighbors.h"
