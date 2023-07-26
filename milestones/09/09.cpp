@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-    constexpr double timestep = 15.0;
+    constexpr double timestep = 5.0;
     constexpr int steps = 50001;
     constexpr int snapshot_interval = steps / 100; // 100 total frames
     constexpr double cutoff = 5.0;
@@ -32,7 +32,6 @@ int main(int argc, char *argv[]) {
     auto [names, init_positions]{read_xyz("whisker_small.xyz")};
     double gold_mass =
         20413.15887; // Gold in system's mass units where g/mol = 0.009649
-    init_positions += 2.; // Shift away from origin to add a little margin to domain
     Atoms atoms(init_positions, gold_mass);
     atoms.k_b = 8.617333262e-5; // Boltzmann constant in eV/K
     Domain domain(MPI_COMM_WORLD, {40.39, 40.8, 144.24978336}, {1, 1, 4}, {0, 0, 1});
@@ -50,11 +49,7 @@ int main(int argc, char *argv[]) {
         neighborList.update(atoms, cutoff);
         double pot = ducastelle(atoms, neighborList, cutoff);
         verlet_step2(atoms.velocities, atoms.forces, timestep, atoms.mass);
-        if (i < eq_steps)
-            berendsen_thermostat(atoms, eq_temp, timestep, eq_relax);
-        else {
-            domain.scale(atoms, {len[0], len[1], len[2] + .001});
-        }
+        domain.scale(atoms, {len[0], len[1], len[2] + 0.001});
 
         if (i % snapshot_interval == 0) {
             domain.disable(atoms);
