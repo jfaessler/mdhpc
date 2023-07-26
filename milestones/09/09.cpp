@@ -13,11 +13,11 @@ int main(int argc, char *argv[]) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     constexpr double timestep = 5.0;
-    constexpr int steps = 50001;
+    constexpr int steps = 100001;
     constexpr int snapshot_interval = steps / 100; // 100 total frames
     constexpr double cutoff = 5.0;
     constexpr int eq_steps = 2000;
-    constexpr double eq_temp = 100.0;
+    constexpr double eq_temp = 0.01;
     constexpr double eq_relax = 10.0;
 
     NeighborList neighborList;
@@ -50,7 +50,10 @@ int main(int argc, char *argv[]) {
         neighborList.update(atoms, cutoff);
         double pot = ducastelle(atoms, neighborList, cutoff);
         verlet_step2(atoms.velocities, atoms.forces, timestep, atoms.mass);
-        domain.scale(atoms, {len[0], len[1], len[2] + 0.001});
+        if (i < eq_steps)
+            berendsen_thermostat(atoms, eq_temp, timestep, eq_relax);
+        else
+            domain.scale(atoms, {len[0], len[1], len[2] + 0.001});
 
         if (i % snapshot_interval == 0) {
             domain.disable(atoms);
@@ -64,7 +67,6 @@ int main(int argc, char *argv[]) {
             domain.enable(atoms);
         }
     }
-    //    domain.disable(atoms);
 
     if (rank == 0) {
         delete traj;
