@@ -1,7 +1,7 @@
 # CMake base setup
 cmake_minimum_required(VERSION 3.14)
 include(FetchContent)
-cmake_policy(SET CMP0135 NEW) # weird warning
+#cmake_policy(SET CMP0135 NEW) # weird warning
 # Define project info
 project(
   md_code
