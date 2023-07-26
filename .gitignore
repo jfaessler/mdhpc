@@ -1,7 +1,7 @@
 # Custom files here
-*.xyz
 *.csv
 .idea
+data
 
 # -------------- Below are genereated exclusion patterns ----------------------
 
@@ -166,8 +166,7 @@ _deps
 *.dll
 
 # Fortran module files
-*.mod
-*.smod
+.smod
 
 # Compiled Static libraries
 *.lai
