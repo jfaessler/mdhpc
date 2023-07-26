@@ -1,1 +1,1 @@
-mpirun -n 4 ./08
+mpirun -n 6 ./08
