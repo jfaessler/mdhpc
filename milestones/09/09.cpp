@@ -15,6 +15,9 @@ int main(int argc, char *argv[]) {
     constexpr int steps = 50001;
     constexpr int snapshot_interval = steps / 100; // 100 total frames
     constexpr double cutoff = 5.0;
+    constexpr int eq_steps = 2000;
+    constexpr double eq_temp = 100.0;
+    constexpr double eq_relax = 10.0;
 
     NeighborList neighborList;
 
@@ -32,7 +35,7 @@ int main(int argc, char *argv[]) {
     init_positions += 2.; // Shift away from origin to add a little margin to domain
     Atoms atoms(init_positions, gold_mass);
     atoms.k_b = 8.617333262e-5; // Boltzmann constant in eV/K
-    Domain domain(MPI_COMM_WORLD, {40.39, 40.8, 144.24978336}, {1, 1, 6}, {0, 0, 1});
+    Domain domain(MPI_COMM_WORLD, {40.39, 40.8, 144.24978336}, {1, 1, 4}, {0, 0, 1});
     domain.enable(atoms);
     domain.exchange_atoms(atoms);
     domain.update_ghosts(atoms, 2 * cutoff);
@@ -41,13 +44,17 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < steps; i++) {
         // TODO masses???
         auto len = domain.domain_length();
-        domain.scale(atoms, { len[0], len[1], len[2] + .001});
         verlet_step1(atoms.positions, atoms.velocities, atoms.forces, timestep, atoms.mass);
         domain.exchange_atoms(atoms);
         domain.update_ghosts(atoms, 2 * cutoff);
         neighborList.update(atoms, cutoff);
         double pot = ducastelle(atoms, neighborList, cutoff);
         verlet_step2(atoms.velocities, atoms.forces, timestep, atoms.mass);
+        if (i < eq_steps)
+            berendsen_thermostat(atoms, eq_temp, timestep, eq_relax);
+        else {
+            domain.scale(atoms, {len[0], len[1], len[2] + .001});
+        }
 
         if (i % snapshot_interval == 0) {
             domain.disable(atoms);

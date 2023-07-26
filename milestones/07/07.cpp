@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     constexpr int steps = 52001;
     constexpr double eq_temp = 500.0;
     constexpr int eq_steps = 2000;
-    constexpr int eq_relax = 10.0; // Set to very low value to equilibrate the system
+    constexpr double eq_relax = 10.0; // Set to very low value to equilibrate the system
     constexpr int tau_relax = 50;
     constexpr double delta_q = 4.0; // Increase in temperature per heating cycle
     // TODO heating cycles should not use berendensen thermostat!
