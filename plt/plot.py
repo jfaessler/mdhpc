@@ -41,7 +41,8 @@ def energy_time(report: Run):
     plt.plot(report.data['Step'], report.data['Temperature'])
     plt.show()
 
-def temperature_step(report: Run, step_scale = 50):
+
+def temperature_step(report: Run, step_scale=50):
     x = report.data['Step']
     # plt.plot(x, report.data['Average Temperature'])
     # plt.show()
@@ -51,10 +52,13 @@ def temperature_step(report: Run, step_scale = 50):
     pot = report.data['Potential']
     total = []
     for i in range(len(pot)):
-        pot[i] += 3200
+        pot[i] += 3200 # Potential is shifted for visualization
         total.append(pot[i] + kinetic[i])
     plt.plot(x, pot)
     plt.plot(x, total)
+    plt.show()
+    # plt.plot(report.data['Average Temperature'], total)
+    plt.plot(total, report.data['Average Temperature'])
     plt.show()
 
 
