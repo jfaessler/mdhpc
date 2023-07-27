@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
     std::cout << "Step, Average Temperature, Kinetic, Potential" << std::endl;
     for (size_t i = 0; i < average_temp.size(); i++) {
         std::cout << i * tau_relax * 2 + eq_steps << ',' << average_temp[i]
-                  << ',' << average_kinetic[i] << ',' << average_pot[i] << ','
+                  << ',' << average_kinetic[i] << ',' << average_pot[i]
                   << std::endl;
     }
 
