@@ -1,3 +1,5 @@
+add_subdirectory(mackay)
+
 add_executable(07 07.cpp)
 target_link_libraries(07 md_lib)
 add_executable(07_timestep 07_timestep.cpp)
