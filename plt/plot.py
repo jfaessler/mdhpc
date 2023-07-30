@@ -80,11 +80,11 @@ def cap_size(reports):
     def linear(x, a, b):
         return a * x + b
 
-    def heat_curve(x, slope, t1, t2, height):
+    def heat_curve(x, t1, t2, s1, s2, height):
         return np.piecewise(x, [x < t1, (t1 <= x) & (x <= t2), t2 < x],
-                            [lambda x: slope * x + height,
-                             lambda x: slope * t1 + height + 0 * x,
-                             lambda x: slope * t1 + height + slope * (x - t2)])
+                            [lambda x: s1 * x + height,
+                             lambda x: s1 * t1 + height + 0 * x,
+                             lambda x: s1 * t1 + height + s2 * (x - t2)])
     def cap_fn(x, cap, height):
         return cap * x + height
 
@@ -97,10 +97,11 @@ def cap_size(reports):
         q = np.array(report.data['Step']) * report.params['delta_q']
         T = np.array(report.data['Average Temperature'])
         size.append(report.params['size'])
-        heat_opt, pcov = curve_fit(heat_curve, q, T, p0=[1,75000,100000,1])
-        # plt.plot(q, heat_curve(q, *heat_opt))
-        # plt.plot(q, T)
-        # plt.show()
+        heat_opt, pcov = curve_fit(heat_curve, q, T, p0=[75000 + size[-1] * 7,100000 + size[-1] * 7,1,1,1])
+        latent_heat.append(heat_opt[1] - heat_opt[0])
+        plt.plot(q, heat_curve(q, *heat_opt))
+        plt.plot(q, T)
+        plt.show()
         kinetic = np.array(report.data['Kinetic'])
         pot = np.array(report.data['Potential'])
         total = kinetic + pot
@@ -112,6 +113,10 @@ def cap_size(reports):
     plt.plot(size, heat_capacity)
     plt.xlabel("Cluster Size N (# atoms)")
     plt.ylabel("Heat Capacity C (eV / K)")
+    plt.show()
+    plt.plot(size, latent_heat)
+    plt.xlabel("Cluster Size N (# atoms)")
+    plt.ylabel("Latent Heat (eV)")
     plt.show()
 
 
