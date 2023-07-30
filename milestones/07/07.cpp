@@ -22,9 +22,19 @@ int main(int argc, char *argv[]) {
     // TODO set according to time accumulated
 
     std::ofstream traj("traj.xyz");
-    std::ofstream ts(std::to_string(timestep) + ".timestep");
+//    std::ofstream ts(std::to_string(timestep) + ".timestep");
+    std::string in_filename;
+    std::string data_filename;
+    if (argc >= 3) {
+        in_filename = argv[1];
+        data_filename = argv[2];
+    } else {
+        in_filename = "cluster_923.xyz";
+        data_filename = "average.csv";
+    }
+    std::ofstream data(data_filename);
 
-    auto [names, init_positions]{read_xyz("cluster_923.xyz")};
+    auto [names, init_positions]{read_xyz(in_filename)};
     double gold_mass =
         20413.15887; // Gold in system's mass units where g/mol = 0.009649
     Atoms atoms(init_positions, gold_mass);
@@ -37,7 +47,7 @@ int main(int argc, char *argv[]) {
     std::cout << "Step,Time,Total Energy,Potential,Kinetic,Temperature"
               << std::endl;
     std::cout.precision(10);
-    ts.precision(10);
+//    ts.precision(10);
 
     // Data structures for storing averages
     std::vector<double> average_temp;
@@ -93,16 +103,19 @@ int main(int argc, char *argv[]) {
             std::cout << i << "," << (i)*timestep << "," << pot + kinetic << ","
                       << pot << "," << kinetic << "," << temperature(atoms)
                       << std::endl;
-            ts << (i + 1) * timestep << "," << pot + kinetic << std::endl;
+//            ts << (i + 1) * timestep << "," << pot + kinetic << std::endl;
         }
     }
 
-    std::cout << "Step,Average Temperature,Kinetic,Potential" << std::endl;
+    data << "#PARAMS:" << "size=" << atoms.nb_atoms() << ",delta_q=" << delta_q << std::endl;
+    data << "Step,Time,Average Temperature,Kinetic,Potential" << std::endl;
     for (size_t i = 0; i < average_temp.size(); i++) {
-        std::cout << i * tau_relax * 2 + eq_steps << ',' << average_temp[i]
+        size_t step = i * tau_relax * 2 + eq_steps;
+        data << step << ',' << static_cast<double>(i) * timestep << ',' << average_temp[i]
                   << ',' << average_kinetic[i] << ',' << average_pot[i]
                   << std::endl;
     }
 
     traj.close();
+    data.close();
 }

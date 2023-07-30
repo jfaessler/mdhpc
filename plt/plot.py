@@ -16,11 +16,15 @@ class Run:
 
             self.params = {}
             self.data = {}
-            params_line = None
             label_line = None
 
             for line in file.readlines():
                 if line[0] == '#':
+                    if line[0:8] == "#PARAMS:":
+                        params_line = line[8:].replace('\n', '').split(',')
+                        for param in params_line:
+                            k, v = param.split('=')
+                            self.params[k] = float(v)
                     continue
                 if label_line is None:
                     label_line = line.replace('\n', '').split(',')
@@ -43,7 +47,7 @@ def energy_time(report: Run):
 
 
 def temperature_step(report: Run, step_scale=50):
-    x = report.data['Step']
+    x = np.array(report.data['Step'])
     # plt.plot(x, report.data['Average Temperature'])
     # plt.show()
     kinetic = report.data['Kinetic']
@@ -52,14 +56,52 @@ def temperature_step(report: Run, step_scale=50):
     pot = report.data['Potential']
     total = []
     for i in range(len(pot)):
-        pot[i] += 3200 # Potential is shifted for visualization
+        pot[i] += 1050  # Potential is shifted for visualization
         total.append(pot[i] + kinetic[i])
     plt.plot(x, pot)
     plt.plot(x, total)
     plt.show()
-    # plt.plot(report.data['Average Temperature'], total)
-    plt.plot(total, report.data['Average Temperature'])
+
+    def f(x, a, b):
+        return a * x + b
+
+    popt, pcov = curve_fit(f, x, total)
+    plt.plot(x, f(x, *popt), "b+")
+    plt.plot(x, total, "r-")
     plt.show()
+    print(popt)
+
+    # plt.plot(report.data['Average Temperature'], total)
+    # plt.plot(total, report.data['Average Temperature'])
+    # plt.show()
+
+
+def cap_size(reports):
+    def linear(x, a, b):
+        return a * x + b
+
+    def heat_curve(x, height, slope, t1, t2):
+        return np.piecewise(x, [x < t1, (t1 <= x) & (x <= t2), t2 < x],
+                            [lambda x: slope * x + height,
+                             lambda x: slope * t1 + height + 0 * x,
+                             lambda x: slope * t1 + height + slope * (x - t2)])
+        # if x < t1:
+        #     return slope * x + height
+        # y = slope * t1 + height
+        # if x < t2: return y
+        # return y + slope * (x - t2)
+
+    size = []
+    heat_capacity = []
+    for report in reports:
+        q = np.array(report.data['Step']) * report.params['delta_q']
+        q = np.array(report.data['Step'])
+        T = np.array(report.data['Average Temperature'])
+        size.append(report.params['size'])
+        popt, pcov = curve_fit(heat_curve, q, T, p0=[1,1,25000,30000])
+        plt.plot(q, heat_curve(q, *popt))
+        plt.plot(q, T)
+        plt.show()
 
 
 if __name__ == '__main__':
@@ -70,6 +112,7 @@ if __name__ == '__main__':
     files.sort()
     for filename in files:
         reports.append(Run(filename))
-    for report in reports:
-        # energy_time(report)
-        temperature_step(report)
+    # for report in reports:
+    # energy_time(report)
+    # temperature_step(report)
+    cap_size(reports)
