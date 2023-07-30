@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
     // Set to very low value to equilibrate the system
     constexpr double eq_relax = 10000.0;
     constexpr int tau_relax = 50;
-    constexpr double delta_q = 4.0; // Increase in temperature per heating cycle
+    constexpr double delta_q = 4.0; // Increase in energy per heating cycle
     // TODO heating cycles should not use berendensen thermostat!
     // Rescale for a certain change in kinetic, then let it wait for 1000
     // And take the average for the last like 500 to let it equilibriate
