@@ -12,6 +12,7 @@ set(
         mpi_support.h
         thermostat.h
         domain.h
+        analysis.h
 )
 
 # List of implementation files
@@ -27,7 +28,7 @@ set(
         thermostat.cpp
         ducastelle.cpp
         domain.cpp
-)
+        analysis.cpp)
 
 # Create a static library
 add_library(md_lib STATIC ${MD_CPP} ${MD_HEADERS})
