@@ -19,15 +19,7 @@ int main(int argc, char *argv[]) {
 
     NeighborList neighborList;
 
-    // Perform IO on one rank to avoid duplicates
-    std::ofstream *traj = nullptr;
-    if (rank == 0) {
-        traj = new std::ofstream ("traj.xyz");
-        std::cout << "Step,Time,Total Energy,Potential,Kinetic,Temperature" << std::endl;
-        std::cout.precision(10);
-    }
-
-    auto [names, init_positions]{read_xyz("cluster_3871.xyz")};
+    auto [names, init_positions]{read_xyz("cluster_923.xyz")};
     double gold_mass =
         20413.15887; // Gold in system's mass units where g/mol = 0.009649
     init_positions += 2.; // Shift away from origin to add a little margin to domain
@@ -39,19 +31,31 @@ int main(int argc, char *argv[]) {
     domain.update_ghosts(atoms, 2 * cutoff);
     std::cout << domain.nb_local() << " atoms for rank " << rank << std::endl;
 
+    // Perform IO on one rank to avoid duplicates
+    std::ofstream *traj = nullptr;
+    if (rank == 0) {
+        traj = new std::ofstream ("traj.xyz");
+        std::cout << "Step,Time,Total Energy,Potential,Kinetic,Temperature" << std::endl;
+        std::cout.precision(10);
+    }
+
     for (int i = 0; i < steps; i++) {
         // TODO masses???
         verlet_step1(atoms.positions, atoms.velocities, atoms.forces, timestep, atoms.mass);
         domain.exchange_atoms(atoms);
         domain.update_ghosts(atoms, 2 * cutoff);
         neighborList.update(atoms, cutoff);
-        double pot = ducastelle(atoms, neighborList, cutoff);
+        ducastelle(atoms, neighborList, cutoff);
         verlet_step2(atoms.velocities, atoms.forces, timestep, atoms.mass);
 
         if (i % snapshot_interval == 0) {
             domain.disable(atoms);
                 if (traj != nullptr) {
                     assert(rank == 0);
+                    // Slower cheaty way of only measuring potentials of non-ghost
+                    // atoms for write operations
+                    neighborList.update(atoms, cutoff);
+                    double pot = ducastelle(atoms, neighborList, cutoff);
                     write_xyz(*traj, atoms);
                     auto kinetic = kinetic_energy(atoms);
                     std::cout << i << "," << (i) * timestep << "," << pot + kinetic << ","
