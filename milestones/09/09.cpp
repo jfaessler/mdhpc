@@ -14,13 +14,13 @@ int main(int argc, char *argv[]) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     constexpr double timestep = 5.0;
-    constexpr int steps = 100001;
+    constexpr int steps = 50001;
     constexpr int snapshot_interval = steps / 100; // 100 total frames
     constexpr double cutoff = 5.0;
     constexpr int eq_steps = 2000;
     constexpr double eq_temp = 0.01;
     constexpr double eq_relax = 10000.0;
-    constexpr double strain_rate = 0.001; // Strain per frame
+    constexpr double strain_rate = 0.0001; // Strain per frame
     double original_length;
 
     NeighborList neighborList;
@@ -102,7 +102,7 @@ int main(int argc, char *argv[]) {
                 std::cout << i << "," << (i)*timestep << "," << pot + kinetic
                           << "," << pot << "," << kinetic << ","
                           << temperature(atoms) << ","
-                          << len[2] / original_length << ","
+                          << (len[2] - original_length) / original_length << ","
                           << stress(2,2) << std::endl;
             }
             domain.enable(atoms);
