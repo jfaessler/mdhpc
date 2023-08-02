@@ -110,6 +110,7 @@ def cap_size(reports):
         # plt.plot(q, cap_fn(q, *cap_opt))
         # plt.show()
         heat_capacity.append(cap_opt[0])
+        melting_point.append(heat_curve(heat_opt[0], *heat_opt))
     plt.plot(size, heat_capacity)
     plt.xlabel("Cluster Size N (# atoms)")
     plt.ylabel("Heat Capacity C (eV / K)")
@@ -117,6 +118,10 @@ def cap_size(reports):
     plt.plot(size, latent_heat)
     plt.xlabel("Cluster Size N (# atoms)")
     plt.ylabel("Latent Heat (eV)")
+    plt.show()
+    plt.plot(size, melting_point)
+    plt.xlabel("Cluster Size N (# atoms)")
+    plt.ylabel("Melting Point (K)")
     plt.show()
 
 
