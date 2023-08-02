@@ -16,11 +16,11 @@ int main(int argc, char *argv[]) {
     constexpr double timestep = 5.0;
     constexpr int steps = 50001;
     constexpr int snapshot_interval = steps / 100; // 100 total frames
-    constexpr double cutoff = 5.0;
+    constexpr double cutoff = 10.0;
     constexpr int eq_steps = 4000;
     constexpr double eq_temp = 100.0;
-    constexpr double eq_relax = 10.0;
-    constexpr double strain_rate = 0.000; // Strain per frame
+    constexpr double eq_relax = 100.0;
+    constexpr double strain_rate = 0.001; // Strain per frame
     double original_length;
 
     NeighborList neighborList;
@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
         double pot = ducastelle(atoms, neighborList, cutoff);
         verlet_step2(atoms.velocities, atoms.forces, timestep, atoms.mass);
         if (i < eq_steps) {
-            berendsen_thermostat(atoms, eq_temp, timestep, eq_relax);
+//            berendsen_thermostat(atoms, eq_temp, timestep, eq_relax);
         } else {
             domain.scale(atoms, {len[0], len[1], len[2] + strain_rate});
         }
