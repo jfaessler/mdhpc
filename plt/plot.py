@@ -126,7 +126,9 @@ def cap_size(reports):
 
 
 def stress_strain(report):
-    plt.plot(report.data['Step'], report.data['Stress'])
+    s = np.array(report.data['Step'])
+    s /= 1000
+    plt.plot(s, report.data['Stress'])
     plt.show()
     plt.plot(report.data['Strain'], report.data['Stress'])
     plt.show()
