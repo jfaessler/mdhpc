@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
         20413.15887; // Gold in system's mass units where g/mol = 0.009649
     Atoms atoms(init_positions, gold_mass);
     atoms.k_b = 8.617333262e-5; // Boltzmann constant in eV/K
-    Domain domain(MPI_COMM_WORLD, {40.39, 40.8, 144.24978336}, {1, 1, 1},
+    Domain domain(MPI_COMM_WORLD, {40.39, 40.8, 144.24978336}, {1, 1, 4},
                   {0, 0, 1});
     domain.enable(atoms);
     domain.exchange_atoms(atoms);
@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
     if (rank == 0) {
         traj = new std::ofstream("traj.xyz");
         std::cout
-            << "Step,Time,Total Energy,Potential,Kinetic,Temperature,Strain"
+            << "Step,Time,Total Energy,Potential,Kinetic,Temperature,Strain,Stress"
             << std::endl;
         std::cout.precision(10);
     }
@@ -79,14 +79,14 @@ int main(int argc, char *argv[]) {
                 displ[d] = 9 * d;
             }
             MPI_Allgatherv(local_stress.data(), 9, MPI_DOUBLE, recv.data(), recvcount.data(), displ.data(), MPI_DOUBLE, MPI_COMM_WORLD);
+            Eigen::Matrix3d stress;
+            stress.setZero();
             if (domain.rank() == 0) {
 //                                std::cout << recv << std::endl;
-                Eigen::Matrix3d stress;
-                stress.setZero();
                 for (int d = 0; d < domain.size(); d++) {
                     stress += recv.block<3,3>(0,d*3);
                 }
-                std::cout << stress(2,2) << std::endl;
+//                std::cout << stress(2,2) << std::endl;
             }
 //            MPI_Comm comm = domain.communicator();
             //            MPI::Eigen::allgather(stress, recv, comm); // This part does not work
@@ -102,7 +102,8 @@ int main(int argc, char *argv[]) {
                 std::cout << i << "," << (i)*timestep << "," << pot + kinetic
                           << "," << pot << "," << kinetic << ","
                           << temperature(atoms) << ","
-                          << len[2] / original_length << std::endl;
+                          << len[2] / original_length << ","
+                          << stress(2,2) << std::endl;
             }
             domain.enable(atoms);
         }

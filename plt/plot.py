@@ -85,9 +85,9 @@ def cap_size(reports):
                             [lambda x: s1 * x + height,
                              lambda x: s1 * t1 + height + 0 * x,
                              lambda x: s1 * t1 + height + s2 * (x - t2)])
+
     def cap_fn(x, cap, height):
         return cap * x + height
-
 
     size = []
     heat_capacity = []
@@ -97,7 +97,7 @@ def cap_size(reports):
         q = np.array(report.data['Step']) * report.params['delta_q']
         T = np.array(report.data['Average Temperature'])
         size.append(report.params['size'])
-        heat_opt, pcov = curve_fit(heat_curve, q, T, p0=[75000 + size[-1] * 7,100000 + size[-1] * 7,1,1,1])
+        heat_opt, pcov = curve_fit(heat_curve, q, T, p0=[75000 + size[-1] * 7, 100000 + size[-1] * 7, 1, 1, 1])
         latent_heat.append(heat_opt[1] - heat_opt[0])
         plt.plot(q, heat_curve(q, *heat_opt))
         plt.plot(q, T)
@@ -125,6 +125,13 @@ def cap_size(reports):
     plt.show()
 
 
+def stress_strain(report):
+    plt.plot(report.data['Step'], report.data['Stress'])
+    plt.show()
+    plt.plot(report.data['Strain'], report.data['Stress'])
+    plt.show()
+
+
 if __name__ == '__main__':
     files = []
     reports = []
@@ -135,5 +142,6 @@ if __name__ == '__main__':
         reports.append(Run(filename))
     for report in reports:
         # energy_time(report)
-        temperature_step(report)
+        # temperature_step(report)
+        stress_strain(report)
     # cap_size(reports)
