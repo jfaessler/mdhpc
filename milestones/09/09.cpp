@@ -64,12 +64,24 @@ int main(int argc, char *argv[]) {
             domain.scale(atoms, {len[0], len[1], len[2] + strain_rate});
 
         if (i % snapshot_interval == 0) {
-            Eigen::Matrix3d stress = stress_parallel(atoms, neighborList, domain, cutoff);
+            Eigen::Matrix3d local_stress = stress_parallel(atoms, neighborList, domain, cutoff);
             Eigen::Matrix3Xd recv(3, domain.size() * 3);
             Eigen::ArrayXi recvcount(3 * domain.size());
             recvcount.setConstant(9);
             Eigen::ArrayXi displ(3 * domain.size());
-//            MPI_Allgatherv(stress.data(), 9, MPI_DOUBLE, recv.data(), recvcount.data(), )
+            for (int d = 0; d < domain.size(); d++) {
+                displ[d] = 9 * d;
+            }
+//            MPI_Allgatherv(local_stress.data(), 9, MPI_DOUBLE, recv.data(), recvcount.data(), displ.data(), MPI_DOUBLE, MPI_COMM_WORLD);
+            if (domain.rank() == 0) {
+                //                std::cout << recv << std::endl;
+                Eigen::Matrix3d stress;
+                stress.setZero();
+                for (int d = 0; d < domain.size(); d++) {
+                    stress += recv.block<3,3>(0,d*3);
+                }
+                std::cout << stress(2,2) << std::endl;
+            }
 //            MPI_Comm comm = domain.communicator();
             //            MPI::Eigen::allgather(stress, recv, comm); // This part does not work
             domain.disable(atoms);
@@ -78,6 +90,7 @@ int main(int argc, char *argv[]) {
                 write_xyz(*traj, atoms);
                 // Slower cheaty way of only measuring potentials of non-ghost
                 // atoms for write operations
+                neighborList.update(atoms, cutoff);
                 double pot = ducastelle(atoms, neighborList, cutoff);
                 auto kinetic = kinetic_energy(atoms);
                 std::cout << i << "," << (i)*timestep << "," << pot + kinetic
