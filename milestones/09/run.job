@@ -1,6 +1,6 @@
 #!/bin/bash -x
 #SBATCH --job_name=md
-#SBATCH --nodes=2
+#SBATCH --nodes=1
 #SBATCH --ntasks-per-node=40
 #SBATCH --partition=dev-single
 #SBATCH --time=00:30:00
@@ -12,4 +12,4 @@ module load mpi/openmpi/4.1
 
 echo "Running on ${SLURM_JOB_NUM_NODES} nodes with ${SLURM_JOB_CPUS_PER_NODE} cores each."
 echo "Each node has ${SLURM_MEM_PER_NODE} of memory allocated to this job."
-time mpirun build/milestones/09/09
+time mpirun ./09

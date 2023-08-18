@@ -1,7 +1,7 @@
 add_executable(09 09.cpp)
 target_link_libraries(09 md_lib)
 
-set(assets whisker_small.xyz whisker_large.xyz run.sh)
+set(assets whisker_small.xyz whisker_large.xyz run.sh run.job)
 
 foreach (asset ${assets})
     add_custom_command(
