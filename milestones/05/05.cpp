@@ -8,6 +8,7 @@ int main(int argc, char *argv[]) {
     const double timestep = 0.001;
     const int steps = 30000;
     const int snapshot_interval = 100;
+    const int relax_steps = 5000;
 
     const double epsilon = 1.0;
     const double sigma = 1.0;
@@ -15,9 +16,19 @@ int main(int argc, char *argv[]) {
     const double target_temp = 0.;
     const double relaxation = 1.0;
 
-    const int lattice_size = 5;
     const double spacing = 1. * sigma; // Lattice constant
-    const int nb_atoms = 100;
+    int lattice_size;
+    int nb_atoms;
+    if (argc == 2) {
+        lattice_size = std::stoi(argv[1]);
+        nb_atoms = lattice_size * lattice_size * lattice_size;
+    } else if (argc > 2) {
+            lattice_size = std::stoi(argv[1]);
+            nb_atoms = std::stoi(argv[2]);
+    } else {
+        lattice_size = 5;
+        nb_atoms = 100;
+    }
     assert(lattice_size * lattice_size * lattice_size >= nb_atoms);
 
     Positions_t init_positions;
@@ -30,23 +41,24 @@ int main(int argc, char *argv[]) {
     }
 
     Atoms atoms(init_positions);
-//    atoms.velocities.setRandom();
 
     std::ofstream traj("traj.xyz");
     std::cout << "Time,Total Energy,Potential,Kinetic,Temperature" << std::endl;
 
-        write_xyz(traj, atoms);
+    write_xyz(traj, atoms);
     for (int i = 0; i < steps; ++i) {
         verlet_step1(atoms.positions, atoms.velocities, atoms.forces, timestep);
         double pot = lj_direct_summation(atoms, epsilon, sigma);
         verlet_step2(atoms.velocities, atoms.forces, timestep);
-        berendsen_thermostat(atoms, target_temp, timestep, relaxation);
+        if (i < relax_steps)
+            berendsen_thermostat(atoms, target_temp, timestep, relaxation);
 
         if (i % snapshot_interval == 0) {
             write_xyz(traj, atoms);
             auto kinetic = Eigen::pow(atoms.velocities, 2).sum() / 2;
             std::cout << (i + 1) * timestep << "," << pot + kinetic << ","
-                      << pot << "," << kinetic << "," << temperature(atoms) << std::endl;
+                      << pot << "," << kinetic << "," << temperature(atoms)
+                      << std::endl;
         }
     }
 
