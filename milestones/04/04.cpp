@@ -4,11 +4,18 @@
 #include <iostream>
 
 int main(int argc, char *argv[]) {
-    double timestep = 0.0001;
+    double timestep;
+    if (argc > 1) {
+        timestep = std::stod(argv[1]);
+    } else {
+        timestep = 0.001;
+    }
     int steps = static_cast<int>(1. / timestep / 1.);
 
     std::ofstream traj("traj.xyz");
     std::ofstream ts(std::to_string(timestep) + ".timestep");
+    ts << "#PARAMS:Timestep=" << timestep << std::endl;
+    ts << "Time,Total Energy" << std::endl;
 
     auto [names, init_positions,
           init_velocities]{read_xyz_with_velocities("lj54.xyz")};

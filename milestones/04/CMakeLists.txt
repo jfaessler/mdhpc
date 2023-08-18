@@ -1,6 +1,6 @@
 add_executable(04 04.cpp)
 target_link_libraries(04 md_lib)
-set(assets lj54.xyz)
+set(assets lj54.xyz timesteps.sh)
 
 foreach (asset ${assets})
     add_custom_command(
