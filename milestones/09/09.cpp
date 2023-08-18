@@ -9,6 +9,7 @@
 #include <iostream>
 
 int main(int argc, char *argv[]) {
+    std::string filename;
     MPI_Init(&argc, &argv);
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -25,12 +26,12 @@ int main(int argc, char *argv[]) {
 
     NeighborList neighborList;
 
-    auto [names, init_positions]{read_xyz("whisker_small.xyz")};
+    auto [names, init_positions]{read_xyz(filename)};
     double gold_mass =
         20413.15887; // Gold in system's mass units where g/mol = 0.009649
     Atoms atoms(init_positions, gold_mass);
     atoms.k_b = 8.617333262e-5; // Boltzmann constant in eV/K
-    Domain domain(MPI_COMM_WORLD, {40.39, 40.8, 144.24978336}, {1, 1, 4},
+    Domain domain(MPI_COMM_WORLD, {80.77987868, 81.59999999, 288.49956672}, {2, 2, 10},
                   {0, 0, 1});
     domain.enable(atoms);
     domain.exchange_atoms(atoms);
