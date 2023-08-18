@@ -85,10 +85,6 @@ def cap_size(reports):
                             [lambda x: s1 * x + height,
                              lambda x: s1 * t1 + height + 0 * x,
                              lambda x: s1 * t1 + height + s2 * (x - t2)])
-
-    def cap_fn(x, cap, height):
-        return cap * x + height
-
     size = []
     heat_capacity = []
     melting_point = []
@@ -99,18 +95,14 @@ def cap_size(reports):
         size.append(report.params['size'])
         heat_opt, pcov = curve_fit(heat_curve, q, T, p0=[75000 + size[-1] * 7, 100000 + size[-1] * 7, 1, 1, 1])
         latent_heat.append(heat_opt[1] - heat_opt[0])
-        plt.plot(q, heat_curve(q, *heat_opt))
-        plt.plot(q, T)
-        plt.show()
-        kinetic = np.array(report.data['Kinetic'])
-        pot = np.array(report.data['Potential'])
-        total = kinetic + pot
-        cap_opt, pcov = curve_fit(cap_fn, q, total)
-        # plt.plot(q, total, "r+")
-        # plt.plot(q, cap_fn(q, *cap_opt))
-        # plt.show()
-        heat_capacity.append(cap_opt[0])
+        plt.plot(q, heat_curve(q, *heat_opt), label='Fitted Trajectory')
+        plt.plot(q, T, label='Observed Temperature')
+        plt.legend()
+        plt.xlabel('Energy Added (eV)')
+        plt.ylabel('Temperature (K)')
+        heat_capacity.append(heat_opt[2])
         melting_point.append(heat_curve(heat_opt[0], *heat_opt))
+        plt.show()
     plt.plot(size, heat_capacity)
     plt.xlabel("Cluster Size N (# atoms)")
     plt.ylabel("Heat Capacity C (eV / K)")
@@ -153,11 +145,11 @@ if __name__ == '__main__':
     files.sort()
     for filename in files:
         reports.append(Run(filename))
-    for report in reports:
+    # for report in reports:
         # energy_time(report)
         # temperature_step(report)
-        stress_strain(report)
-    # cap_size(reports)
+        # stress_strain(report)
+    cap_size(reports)
     files = []
     reports = []
     for filename in glob.glob("*.timestep"):
@@ -165,6 +157,6 @@ if __name__ == '__main__':
     files.sort()
     for filename in files:
         reports.append(Run(filename))
-    energy_time_4(reports, 0.03)
-    energy_time_4(reports, 0.05)
-    energy_time_4(reports, 1.0)
+    # energy_time_4(reports, 0.03)
+    # energy_time_4(reports, 0.05)
+    # energy_time_4(reports, 1.0)
