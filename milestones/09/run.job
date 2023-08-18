@@ -1,8 +1,8 @@
 #!/bin/bash -x
-#SBATCH --job_name=md
+#SBATCH --job-name=md
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=40
-#SBATCH --partition=dev-single
+#SBATCH --partition=dev_single
 #SBATCH --time=00:30:00
 #SBATCH --mem=6gb
 #SBATCH --export=ALL
