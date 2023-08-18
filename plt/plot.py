@@ -125,6 +125,15 @@ def cap_size(reports):
     plt.show()
 
 
+def stress_strain(report):
+    s = np.array(report.data['Step'])
+    s /= 1000
+    plt.plot(s, report.data['Stress'])
+    plt.show()
+    plt.plot(report.data['Strain'], report.data['Stress'])
+    plt.show()
+
+
 def energy_time_4(reports: List[Run], max_timestep: float):
     for report in reports:
         if report.params['Timestep'] < max_timestep:
@@ -146,7 +155,8 @@ if __name__ == '__main__':
         reports.append(Run(filename))
     for report in reports:
         # energy_time(report)
-        temperature_step(report)
+        # temperature_step(report)
+        stress_strain(report)
     # cap_size(reports)
     files = []
     reports = []
