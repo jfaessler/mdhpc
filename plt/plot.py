@@ -139,17 +139,21 @@ def energy_time_4(reports: List[Run], max_timestep: float):
     plt.show()
 
 
-def scaling_5():
+def scaling_neighbor():
     # Hardcode values from scaling.sh run
-    time = [5.508, 20.815, 60 + 1.818, 2 * 60 + 36.214, 5 * 60 + 46.151, 13 * 60 + 17.415]
-    cluster_size = [4**3, 5**3, 6**3, 7**3, 8**3, 9**3]
-    plt.plot(cluster_size, time)
+    time5 = [5.508, 20.815, 60 + 1.818, 2 * 60 + 36.214, 5 * 60 + 46.151, 13 * 60 + 17.415]
+    cluster_size5 = [4**3, 5**3, 6**3, 7**3, 8**3, 9**3]
+    plt.plot(cluster_size5, time5)
+    plt.xlabel("Cluster Size (# atoms)")
+    plt.ylabel("Runtime (s)")
+    plt.show()
+    plt.loglog(cluster_size5, time5)
     plt.xlabel("Cluster Size (# atoms)")
     plt.ylabel("Runtime (s)")
     plt.show()
 
 if __name__ == '__main__':
-    scaling_5()
+    scaling_neighbor()
     files = []
     reports = []
     for filename in glob.glob("*.csv"):
