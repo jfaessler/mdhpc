@@ -17,9 +17,19 @@ int main(int argc, char *argv[]) {
     const double target_temp = 0.;
     const double relaxation = 1.0;
 
-    const int lattice_size = 10;
     const double spacing = 1. * sigma; // Lattice constant
-    const int nb_atoms = 200;
+    int lattice_size;
+    int nb_atoms;
+    if (argc == 2) {
+        lattice_size = std::stoi(argv[1]);
+        nb_atoms = lattice_size * lattice_size * lattice_size;
+    } else if (argc > 2) {
+        lattice_size = std::stoi(argv[1]);
+        nb_atoms = std::stoi(argv[2]);
+    } else {
+        lattice_size = 5;
+        nb_atoms = 100;
+    }
     assert(lattice_size * lattice_size * lattice_size >= nb_atoms);
 
     Positions_t init_positions;
