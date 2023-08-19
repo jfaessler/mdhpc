@@ -140,17 +140,24 @@ def energy_time_4(reports: List[Run], max_timestep: float):
 
 
 def scaling_neighbor():
+    def quadratic(x, a):
+        return a * (x**2)
     # Hardcode values from scaling.sh run
-    time5 = [5.508, 20.815, 60 + 1.818, 2 * 60 + 36.214, 5 * 60 + 46.151, 13 * 60 + 17.415]
-    cluster_size5 = [4**3, 5**3, 6**3, 7**3, 8**3, 9**3]
+    # time5 = np.array([5.508, 20.815, 60 + 1.818, 2 * 60 + 36.214, 5 * 60 + 46.151, 13 * 60 + 17.415])
+    # cluster_size5 = np.array([4 ** 3, 5 ** 3, 6 ** 3, 7 ** 3, 8 ** 3, 9 ** 3])
+    time5 = np.array([5.508, 20.815, 60 + 1.818, 2 * 60 + 36.214, 5 * 60 + 46.151])
+    cluster_size5 = np.array([4 ** 3, 5 ** 3, 6 ** 3, 7 ** 3, 8 ** 3])
     plt.plot(cluster_size5, time5)
     plt.xlabel("Cluster Size (# atoms)")
     plt.ylabel("Runtime (s)")
     plt.show()
+    popt, pcov = curve_fit(quadratic, cluster_size5, time5)
     plt.loglog(cluster_size5, time5)
+    plt.loglog(cluster_size5, quadratic(cluster_size5, *popt))
     plt.xlabel("Cluster Size (# atoms)")
     plt.ylabel("Runtime (s)")
     plt.show()
+
 
 if __name__ == '__main__':
     scaling_neighbor()
