@@ -77,6 +77,7 @@ def temperature_step(report: Run, step_scale=50):
 
 
 def cap_size(reports):
+    # TODO check that system is fully equalized
     def linear(x, a, b):
         return a * x + b
 
@@ -140,20 +141,24 @@ def energy_time_4(reports: List[Run], max_timestep: float):
 
 
 def scaling_neighbor():
+    # TODO outlier
     def quadratic(x, a):
         return a * (x**2)
     # Hardcode values from scaling.sh run
-    # time5 = np.array([5.508, 20.815, 60 + 1.818, 2 * 60 + 36.214, 5 * 60 + 46.151, 13 * 60 + 17.415])
-    # cluster_size5 = np.array([4 ** 3, 5 ** 3, 6 ** 3, 7 ** 3, 8 ** 3, 9 ** 3])
-    time5 = np.array([5.508, 20.815, 60 + 1.818, 2 * 60 + 36.214, 5 * 60 + 46.151])
-    cluster_size5 = np.array([4 ** 3, 5 ** 3, 6 ** 3, 7 ** 3, 8 ** 3])
-    plt.plot(cluster_size5, time5)
+    cluster_size = np.array([4 ** 3, 5 ** 3, 6 ** 3, 7 ** 3, 8 ** 3, 9 ** 3])
+    time5 = np.array([5.508, 20.815, 60 + 1.818, 2 * 60 + 36.214, 5 * 60 + 46.151, 13 * 60 + 17.415])
+    # cluster_size = np.array([4 ** 3, 5 ** 3, 6 ** 3, 7 ** 3, 8 ** 3])
+    # time5 = np.array([5.508, 20.815, 60 + 1.818, 2 * 60 + 36.214, 5 * 60 + 46.151])
+    time6 = np.array([6.664, 24.605, 60 + 3.911, 60 * 2 + 19.504, 3 * 57.639, 6 * 60 + 56.023])
+    plt.plot(cluster_size, time5)
+    plt.plot(cluster_size, time6)
     plt.xlabel("Cluster Size (# atoms)")
     plt.ylabel("Runtime (s)")
     plt.show()
-    popt, pcov = curve_fit(quadratic, cluster_size5, time5)
-    plt.loglog(cluster_size5, time5)
-    plt.loglog(cluster_size5, quadratic(cluster_size5, *popt))
+    popt, pcov = curve_fit(quadratic, cluster_size, time5)
+    plt.loglog(cluster_size, time5)
+    # plt.loglog(cluster_size, quadratic(cluster_size, *popt))
+    plt.loglog(cluster_size, time6)
     plt.xlabel("Cluster Size (# atoms)")
     plt.ylabel("Runtime (s)")
     plt.show()
