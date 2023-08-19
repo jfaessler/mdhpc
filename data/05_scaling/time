@@ -1,0 +1,24 @@
+# Obtained with scaling.sh
+real    0m5,508s
+user    0m5,466s
+sys     0m0,040s
+
+real    0m20,815s
+user    0m20,745s
+sys     0m0,068s
+
+real    1m1,818s
+user    1m1,666s
+sys     0m0,148s
+
+real    2m36,214s
+user    2m36,008s
+sys     0m0,188s
+
+real    5m46,151s
+user    5m45,761s
+sys     0m0,352s
+
+real    13m17,415s
+user    13m16,076s
+sys     0m0,600s

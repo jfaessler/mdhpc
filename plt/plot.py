@@ -85,6 +85,7 @@ def cap_size(reports):
                             [lambda x: s1 * x + height,
                              lambda x: s1 * t1 + height + 0 * x,
                              lambda x: s1 * t1 + height + s2 * (x - t2)])
+
     size = []
     heat_capacity = []
     melting_point = []
@@ -129,7 +130,8 @@ def stress_strain(report):
 def energy_time_4(reports: List[Run], max_timestep: float):
     for report in reports:
         if report.params['Timestep'] < max_timestep:
-            plt.plot(report.data['Time'], report.data['Total Energy'], label=('Timestep: ' + str(report.params['Timestep'])))
+            plt.plot(report.data['Time'], report.data['Total Energy'],
+                     label=('Timestep: ' + str(report.params['Timestep'])))
     plt.legend()
     plt.xlabel('Time')
     plt.ylabel('Total Energy')
@@ -137,7 +139,17 @@ def energy_time_4(reports: List[Run], max_timestep: float):
     plt.show()
 
 
+def scaling_5():
+    # Hardcode values from scaling.sh run
+    time = [5.508, 20.815, 60 + 1.818, 2 * 60 + 36.214, 5 * 60 + 46.151, 13 * 60 + 17.415]
+    cluster_size = [4**3, 5**3, 6**3, 7**3, 8**3, 9**3]
+    plt.plot(cluster_size, time)
+    plt.xlabel("Cluster Size (# atoms)")
+    plt.ylabel("Runtime (s)")
+    plt.show()
+
 if __name__ == '__main__':
+    scaling_5()
     files = []
     reports = []
     for filename in glob.glob("*.csv"):
@@ -146,9 +158,9 @@ if __name__ == '__main__':
     for filename in files:
         reports.append(Run(filename))
     # for report in reports:
-        # energy_time(report)
-        # temperature_step(report)
-        # stress_strain(report)
+    # energy_time(report)
+    # temperature_step(report)
+    # stress_strain(report)
     cap_size(reports)
     files = []
     reports = []
