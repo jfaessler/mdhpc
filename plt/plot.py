@@ -92,17 +92,17 @@ def cap_size(reports):
     melting_point = []
     latent_heat = []
     for report in reports:
-        q = np.array(report.data['Step']) * report.params['delta_q']
+        q = np.array(report.data['Cycle']) * report.params['delta_q']  #TODO plus one?
         T = np.array(report.data['Average Temperature'])
         size.append(report.params['size'])
-        heat_opt, pcov = curve_fit(heat_curve, q, T, p0=[75000 + size[-1] * 7, 100000 + size[-1] * 7, 1, 1, 1])
+        heat_opt, pcov = curve_fit(heat_curve, q, T, p0=[500, 1000, 1, 1, 1])
         latent_heat.append(heat_opt[1] - heat_opt[0])
         plt.plot(q, heat_curve(q, *heat_opt), label='Fitted Trajectory')
         plt.plot(q, T, label='Observed Temperature')
         plt.legend()
         plt.xlabel('Energy Added (eV)')
         plt.ylabel('Temperature (K)')
-        heat_capacity.append(heat_opt[2])
+        heat_capacity.append(heat_opt[3])
         melting_point.append(heat_curve(heat_opt[0], *heat_opt))
         plt.show()
     plt.plot(size, heat_capacity)
@@ -168,7 +168,7 @@ def scaling_neighbor():
 
 
 if __name__ == '__main__':
-    scaling_neighbor()
+    # scaling_neighbor()
     files = []
     reports = []
     for filename in glob.glob("*.csv"):
