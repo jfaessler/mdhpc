@@ -7,18 +7,19 @@
 
 int main(int argc, char *argv[]) {
     constexpr double timestep = 15.0;
-    constexpr int steps = 52001;
+    constexpr int steps = 56001;
     constexpr double eq_temp = 500.0;
-    constexpr int eq_steps = 4000;
+    constexpr int eq_steps_thermostat = 3000;
+    // Let free after heating to finish equilibrating
+    constexpr int eq_steps_release = 3000;
+    constexpr int eq_steps = eq_steps_thermostat + eq_steps_release;
     constexpr double eq_relax = 10000.0;
     constexpr int tau_relax = 50;
     constexpr double delta_q = 4.0; // Increase in energy per heating cycle
 
     constexpr int snapshot_interval = steps / 100; // 100 total frames
-    // TODO set according to time accumulated
 
     std::ofstream traj("traj.xyz");
-//    std::ofstream ts(std::to_string(timestep) + ".timestep");
     std::string in_filename;
     std::string data_filename;
     if (argc >= 3) {
@@ -43,7 +44,7 @@ int main(int argc, char *argv[]) {
     std::cout << "Step,Time,Total Energy,Potential,Kinetic,Temperature"
               << std::endl;
     std::cout.precision(10);
-//    ts.precision(10);
+    //    ts.precision(10);
 
     // Data structures for storing averages
     std::vector<double> average_temp;
@@ -61,9 +62,10 @@ int main(int argc, char *argv[]) {
         neighborList.update(atoms, cutoff);
         double pot = ducastelle(atoms, neighborList, cutoff);
         verlet_step2(atoms.velocities, atoms.forces, timestep, atoms.mass);
-        if (i < eq_steps)
-            berendsen_thermostat(atoms, eq_temp, timestep, eq_relax);
-        else {
+        if (i < eq_steps) {
+            if (i < eq_steps_thermostat)
+                berendsen_thermostat(atoms, eq_temp, timestep, eq_relax);
+        } else {
             int cycle = (i - eq_steps) % (tau_relax * 2);
             if (cycle == 0) {
                 double current_temp;
@@ -99,17 +101,19 @@ int main(int argc, char *argv[]) {
             std::cout << i << "," << (i)*timestep << "," << pot + kinetic << ","
                       << pot << "," << kinetic << "," << temperature(atoms)
                       << std::endl;
-//            ts << (i + 1) * timestep << "," << pot + kinetic << std::endl;
         }
     }
 
-    data << "#PARAMS:" << "size=" << atoms.nb_atoms() << ",delta_q=" << delta_q << std::endl;
-    data << "Step,Time,Average Temperature,Kinetic,Potential" << std::endl;
+    data << "#PARAMS:"
+         << "size=" << atoms.nb_atoms() << ",delta_q=" << delta_q
+         << ", eq_steps=" << eq_steps << std::endl;
+    data << "Step,Cycle,Time,Average Temperature,Kinetic,Potential"
+         << std::endl;
     for (size_t i = 0; i < average_temp.size(); i++) {
-        size_t step = i * tau_relax * 2 + eq_steps;
-        data << step << ',' << static_cast<double>(i) * timestep << ',' << average_temp[i]
-                  << ',' << average_kinetic[i] << ',' << average_pot[i]
-                  << std::endl;
+        size_t step = i * tau_relax * 2 + eq_steps; // full cycle is 2tau
+        data << step << ',' << i << ',' << static_cast<double>(i) * timestep
+             << ',' << average_temp[i] << ',' << average_kinetic[i] << ','
+             << average_pot[i] << std::endl;
     }
 
     traj.close();
