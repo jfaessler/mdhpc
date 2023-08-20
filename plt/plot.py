@@ -43,6 +43,7 @@ class Run:
 
 def energy_time(report: Run):
     plt.plot(report.data['Step'], report.data['Temperature'])
+    plt.tight_layout()
     plt.show()
 
 
@@ -68,6 +69,7 @@ def temperature_step(report: Run, step_scale=50):
     popt, pcov = curve_fit(f, x, total)
     plt.plot(x, f(x, *popt), "b+")
     plt.plot(x, total, "r-")
+    plt.tight_layout()
     plt.show()
     print(popt)
 
@@ -106,6 +108,7 @@ def cap_size(reports):
         plt.ylabel('Temperature (K)')
         heat_capacity.append(1 / heat_opt[2])  # Approximate dE/dT with the fitted slope (which is dT/dE)
         melting_point.append(heat_curve(heat_opt[0], *heat_opt))
+        plt.tight_layout()
         plt.show()
 
     size = np.array(size)
@@ -121,16 +124,19 @@ def cap_size(reports):
     popt, pcov = curve_fit(linear, mass, heat_capacity)
     plt.plot(mass, linear(mass, *popt), 'k--', label='Fitted')
     print("Specific Heat Capacity: {} eV/g/molK".format(popt[0]))
+    plt.tight_layout()
     plt.show()
 
     plt.plot(size, latent_heat)
     plt.xlabel("Cluster Size N (# atoms)")
     plt.ylabel("Latent Heat (eV)")
+    plt.tight_layout()
     plt.show()
 
     plt.plot(size, melting_point)
     plt.xlabel("Cluster Size N (# atoms)")
     plt.ylabel("Melting Point (K)")
+    plt.tight_layout()
     plt.show()
 
 
@@ -138,8 +144,10 @@ def stress_strain(report):
     s = np.array(report.data['Step'])
     s /= 1000
     plt.plot(s, report.data['Stress'])
+    plt.tight_layout()
     plt.show()
     plt.plot(report.data['Strain'], report.data['Stress'])
+    plt.tight_layout()
     plt.show()
 
 
@@ -156,9 +164,11 @@ def energy_time_4(reports: List[Run], max_timestep: float):
 
 
 def scaling_neighbor():
-    # TODO outlier
     def quadratic(x, a):
         return a * (x ** 2)
+
+    def linear(x, a):
+        return a * x
 
     # Hardcode values from scaling.sh run
     cluster_size = np.array([4 ** 3, 5 ** 3, 6 ** 3, 7 ** 3, 8 ** 3, 9 ** 3, 10 ** 3, 11 ** 3, 12 ** 3])
@@ -166,20 +176,27 @@ def scaling_neighbor():
                       40 * 60 + 1.476, 67 * 60 + 46.742])
     time6 = np.array([6.775, 26.213, 60 + 6.307, 2 * 60 + 15.037, 3 * 60 + 55.054, 6 * 60 + 55.267, 10 * 60 + 10.301,
                       15 * 60 + 46.771, 21 * 60 + 26.981])
+
     plt.plot(cluster_size, time5, label='Without Neighbor Lists')
-    plt.plot(cluster_size, time6, label='With Neighbor List')
+    plt.plot(cluster_size, time6, label='With Neighbor Lists')
     plt.xlabel("Cluster Size (# atoms)")
     plt.ylabel("Runtime (s)")
     plt.legend()
+    plt.tight_layout()
     plt.show()
 
     popt, pcov = curve_fit(quadratic, cluster_size, time5)
-    plt.loglog(cluster_size, quadratic(cluster_size, *popt), 'k--', label='N^2 Scaling')
+    plt.loglog(cluster_size, quadratic(cluster_size, *popt), 'k--', label='O(N^2) Scaling')
     plt.loglog(cluster_size, time5, label='Without Neighbor Lists')
+
+    # popt, pcov = curve_fit(linear, cluster_size, time6)
+    # plt.loglog(cluster_size, linear(cluster_size, *popt), 'b--', label='O(N) Scaling')
     plt.loglog(cluster_size, time6, label='With Neighbor List')
+
     plt.xlabel("Cluster Size (# atoms)")
     plt.ylabel("Runtime (s)")
     plt.legend()
+    plt.tight_layout()
     plt.show()
 
 
