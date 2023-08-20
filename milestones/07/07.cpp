@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 
     auto [names, init_positions]{read_xyz(in_filename)};
     double gold_mass =
-        20413.15887; // Gold in system's mass units where g/mol = 0.009649
+        20413.15887; // Gold in system's mass units where [m] = 0.009649 g/mol
     Atoms atoms(init_positions, gold_mass);
     atoms.k_b = 8.617333262e-5; // Boltzmann constant in eV/K
 

@@ -99,24 +99,35 @@ def cap_size(reports):
         size.append(report.params['size'])
         heat_opt, pcov = curve_fit(heat_curve, e, T, p0=[size[-1] / 10 - 20, size[-1] / 5 - 20, 1, 1, 1])
         latent_heat.append(heat_opt[1] - heat_opt[0])
-        plt.plot(e, heat_curve(e, *heat_opt), label='Fitted Trajectory')
+        plt.plot(e, heat_curve(e, *heat_opt), label='Fitted Equation')
         plt.plot(e, T, label='Observed Temperature')
         plt.legend()
         plt.xlabel('Energy Added (eV)')
         plt.ylabel('Temperature (K)')
-        heat_capacity.append(heat_opt[2])
+        heat_capacity.append(1 / heat_opt[2])  # Approximate dE/dT with the fitted slope (which is dT/dE)
         melting_point.append(heat_curve(heat_opt[0], *heat_opt))
         plt.show()
-        plt.plot(report.data['Cycle'], report.data['Average Temperature'])
-        plt.show()
-    plt.plot(size, heat_capacity)
+
+    size = np.array(size)
+
+    plt.plot(size, heat_capacity, label="Heat Capacity")
     plt.xlabel("Cluster Size N (# atoms)")
     plt.ylabel("Heat Capacity C (eV / K)")
+    popt, pcov = curve_fit(linear, size, heat_capacity)
+    plt.plot(size, linear(size, *popt), 'k--', label='Fitted')
+    plt.legend()
     plt.show()
+    mass = size * 20413.15887 / 103.6
+    popt, pcov = curve_fit(linear, mass, heat_capacity)
+    plt.plot(mass, linear(mass, *popt), 'k--', label='Fitted')
+    print("Specific Heat Capacity: {} eV/g/molK".format(popt[0]))
+    plt.show()
+
     plt.plot(size, latent_heat)
     plt.xlabel("Cluster Size N (# atoms)")
     plt.ylabel("Latent Heat (eV)")
     plt.show()
+
     plt.plot(size, melting_point)
     plt.xlabel("Cluster Size N (# atoms)")
     plt.ylabel("Melting Point (K)")
@@ -147,13 +158,14 @@ def energy_time_4(reports: List[Run], max_timestep: float):
 def scaling_neighbor():
     # TODO outlier
     def quadratic(x, a):
-        return a * (x**2)
+        return a * (x ** 2)
+
     # Hardcode values from scaling.sh run
-    cluster_size = np.array([4 ** 3, 5 ** 3, 6 ** 3, 7 ** 3, 8 ** 3, 9 ** 3])
-    time5 = np.array([5.508, 20.815, 60 + 1.818, 2 * 60 + 36.214, 5 * 60 + 46.151, 13 * 60 + 17.415])
-    # cluster_size = np.array([4 ** 3, 5 ** 3, 6 ** 3, 7 ** 3, 8 ** 3])
-    # time5 = np.array([5.508, 20.815, 60 + 1.818, 2 * 60 + 36.214, 5 * 60 + 46.151])
-    time6 = np.array([6.664, 24.605, 60 + 3.911, 60 * 2 + 19.504, 3 * 57.639, 6 * 60 + 56.023])
+    cluster_size = np.array([4 ** 3, 5 ** 3, 6 ** 3, 7 ** 3, 8 ** 3, 9 ** 3, 10 ** 3, 11 ** 3, 12 ** 3])
+    time5 = np.array([5.798, 22.119, 60 + 6.095, 2 * 60 + 47.051, 5 * 60 + 51.451, 12 * 60 + 7.075, 22 * 60 + 44.844,
+                      40 * 60 + 1.476, 67 * 60 + 46.742])
+    time6 = np.array([6.775, 26.213, 60 + 6.307, 2 * 60 + 15.037, 3 * 60 + 55.054, 6 * 60 + 55.267, 10 * 60 + 10.301,
+                      15 * 60 + 46.771, 21 * 60 + 26.981])
     plt.plot(cluster_size, time5, label='Without Neighbor Lists')
     plt.plot(cluster_size, time6, label='With Neighbor List')
     plt.xlabel("Cluster Size (# atoms)")
@@ -172,7 +184,7 @@ def scaling_neighbor():
 
 
 if __name__ == '__main__':
-    # scaling_neighbor()
+    scaling_neighbor()
     files = []
     reports = []
     for filename in glob.glob("*.csv"):
