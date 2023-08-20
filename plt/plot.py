@@ -92,7 +92,7 @@ def cap_size(reports):
     melting_point = []
     latent_heat = []
     for report in reports:
-        # q = np.array(report.data['Cycle']) * report.params['delta_q']  #TODO plus one?
+        # Rescale energy to be 0 at the start
         initial_energy = report.data['Kinetic'][0] + report.data['Potential'][0]
         e = np.array(np.array(report.data['Kinetic']) + np.array(report.data['Potential']) - initial_energy)
         T = np.array(report.data['Average Temperature'])
@@ -106,6 +106,8 @@ def cap_size(reports):
         plt.ylabel('Temperature (K)')
         heat_capacity.append(heat_opt[2])
         melting_point.append(heat_curve(heat_opt[0], *heat_opt))
+        plt.show()
+        plt.plot(report.data['Cycle'], report.data['Average Temperature'])
         plt.show()
     plt.plot(size, heat_capacity)
     plt.xlabel("Cluster Size N (# atoms)")

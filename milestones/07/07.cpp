@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
     constexpr int eq_steps = eq_steps_thermostat + eq_steps_release;
     constexpr double eq_relax = 10000.0;
     constexpr int tau_relax = 50;
-    constexpr double delta_q = 4.0; // Increase in energy per heating cycle
+    constexpr double delta_q = 4.0; // Increase in energy per heating cycle TODO is actually temp here
 
     constexpr int snapshot_interval = steps / 100; // 100 total frames
 
@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
 
                 // Deposit kinetic energy into the system via velocity rescaling
                 atoms.velocities *=
-                    sqrt((current_temp + delta_q) / current_temp);
+                    sqrt((current_temp + delta_q) / current_temp); // TODO energy + d_q instead of temp, see what happens
             } else if (cycle >= tau_relax) {
                 // Measure numerator of average temperature,
                 // making sure we have relaxed to let the system settle first
