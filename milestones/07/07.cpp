@@ -7,9 +7,9 @@
 
 int main(int argc, char *argv[]) {
     constexpr double timestep = 15.0;
-    constexpr int steps = 56001;
+    constexpr int steps = 57001;
     constexpr double eq_temp = 500.0;
-    constexpr int eq_steps_thermostat = 3000;
+    constexpr int eq_steps_thermostat = 4000;
     // Let free after heating to finish equilibrating
     constexpr int eq_steps_release = 3000;
     constexpr int eq_steps = eq_steps_thermostat + eq_steps_release;
