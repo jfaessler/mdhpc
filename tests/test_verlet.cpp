@@ -32,11 +32,11 @@ TEST(VerletTest, Multiple) {
     Positions_t r0 (positions);
 
     Velocities_t velocities(3, nb_atoms);
-    velocities.setOnes();
+    velocities.setRandom();
     Velocities_t v0 (velocities);
 
     Forces_t forces(3, nb_atoms);
-    forces(1, Eigen::all).setConstant(1);
+    forces(1, Eigen::all).setRandom();
 
     for (int i = 1; i < steps; i++) {
         verlet_step1(positions, velocities, forces, timestep);
