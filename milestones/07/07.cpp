@@ -9,8 +9,7 @@ int main(int argc, char *argv[]) {
     constexpr double timestep = 15.0;
     constexpr int steps = 52001;
     constexpr double eq_temp = 500.0;
-    constexpr int eq_steps = 2000;
-    // Set to very low value to equilibrate the system
+    constexpr int eq_steps = 4000;
     constexpr double eq_relax = 10000.0;
     constexpr int tau_relax = 50;
     constexpr double delta_q = 4.0; // Increase in energy per heating cycle

@@ -5,3 +5,6 @@ time ./05 6 > size_l6.csv
 time ./05 7 > size_l7.csv
 time ./05 8 > size_l8.csv
 time ./05 9 > size_l9.csv
+time ./05 10 > size_l9.csv
+time ./05 11 > size_l9.csv
+time ./05 12 > size_l9.csv
