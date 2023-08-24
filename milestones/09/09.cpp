@@ -15,10 +15,10 @@ int main(int argc, char *argv[]) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     constexpr double timestep = 5.0;
-    constexpr int steps = 50001;
+    constexpr int steps = 60001;
     constexpr int snapshot_interval = steps / 100; // 100 total frames
     constexpr double cutoff = 10.0;
-    constexpr int eq_steps = 4000;
+    constexpr int eq_steps = 10000;
     constexpr double eq_temp = 100.0;
     constexpr double eq_relax = 100.0;
     constexpr double strain_rate = 0.001; // Strain per frame
