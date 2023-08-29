@@ -1,1 +1,1 @@
-mpirun -n 4 ./09
+mpirun -n 4 ./09 whisker_small.xyz traj_small.xyz 1 1 4
