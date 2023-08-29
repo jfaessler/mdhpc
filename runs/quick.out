@@ -1,0 +1,98 @@
+Running on 1 nodes with 80 cores each.
+Each node has 90000 of memory allocated to this job.
+Rank 22 has coordinate 1 0 2.
+Rank 23 has coordinate 1 0 3.
+Rank 25 has coordinate 1 0 5.
+Rank 28 has coordinate 1 0 8.
+Rank 29 has coordinate 1 0 9.
+Rank 30 has coordinate 1 1 0.
+Rank 31 has coordinate 1 1 1.
+Rank 32 has coordinate 1 1 2.
+Rank 36 has coordinate 1 1 6.
+Rank 37 has coordinate 1 1 7.
+Rank 39 has coordinate 1 1 9.
+Rank 5 has coordinate 0 0 5.
+Rank 8 has coordinate 0 0 8.
+Rank 16 has coordinate 0 1 6.
+Rank 19 has coordinate 0 1 9.
+Rank 20 has coordinate 1 0 0.
+Rank 21 has coordinate 1 0 1.
+Rank 6 has coordinate 0 0 6.
+Rank 7 has coordinate 0 0 7.
+Rank 9 has coordinate 0 0 9.
+Rank 10 has coordinate 0 1 0.
+Rank 11 has coordinate 0 1 1.
+Rank 12 has coordinate 0 1 2.
+Rank 13 has coordinate 0 1 3.
+Rank 14 has coordinate 0 1 4.
+Rank 15 has coordinate 0 1 5.
+Rank 17 has coordinate 0 1 7.
+Rank 18 has coordinate 0 1 8.
+Rank 24 has coordinate 1 0 4.
+Rank 26 has coordinate 1 0 6.
+Rank 27 has coordinate 1 0 7.
+Rank 33 has coordinate 1 1 3.
+Rank 34 has coordinate 1 1 4.
+Rank 35 has coordinate 1 1 5.
+Rank 38 has coordinate 1 1 8.
+Rank 0 has coordinate 0 0 0.
+Rank 1 has coordinate 0 0 1.
+Rank 2 has coordinate 0 0 2.
+Rank 3 has coordinate 0 0 3.
+Rank 4 has coordinate 0 0 4.
+0 atoms for rank 8
+0 atoms for rank 15
+0 atoms for rank 17
+0 atoms for rank 16
+0 atoms for rank 19
+0 atoms for rank 20
+0 atoms for rank 22
+0 atoms for rank 18
+0 atoms for rank 23
+0 atoms for rank 24
+0 atoms for rank 26
+0 atoms for rank 25
+0 atoms for rank 28
+0 atoms for rank 29
+0 atoms for rank 30
+0 atoms for rank 31
+0 atoms for rank 27
+0 atoms for rank 33
+0 atoms for rank 34
+0 atoms for rank 32
+0 atoms for rank 36
+0 atoms for rank 35
+0 atoms for rank 37
+610 atoms for rank 4
+0 atoms for rank 38
+610 atoms for rank 0
+610 atoms for rank 1
+610 atoms for rank 2
+610 atoms for rank 3
+0 atoms for rank 39
+0 atoms for rank 21
+0 atoms for rank 6
+0 atoms for rank 5
+0 atoms for rank 7
+0 atoms for rank 9
+0 atoms for rank 10
+0 atoms for rank 11
+0 atoms for rank 12
+0 atoms for rank 13
+0 atoms for rank 14
+Step,Time,Total Energy,Potential,Kinetic,Temperature,Strain,Stress
+
+============================= JOB FEEDBACK =============================
+
+NodeName=uc2n261
+Job ID: 22567980
+Cluster: uc2
+User/Group: fr_jf463/fr_fr
+State: FAILED (exit code 139)
+Nodes: 1
+Cores per node: 80
+CPU Utilized: 00:00:01
+CPU Efficiency: 0.04% of 00:44:00 core-walltime
+Job Wall-clock time: 00:00:33
+Memory Utilized: 3.16 MB
+Memory Efficiency: 0.00% of 87.89 GB

@@ -1,0 +1,122 @@
++ module load compiler/gnu/10.2
+++ /opt/bwhpc/common/admin/modules/module-wrapper/modulecmd bash load compiler/gnu/10.2
++ eval 'GNU_BIN_DIR=/opt/bwhpc/common/compiler/gnu/10.2.0/bin;' export 'GNU_BIN_DIR;' 'GNU_HOME=/opt/bwhpc/common/compiler/gnu/10.2.0;' export 'GNU_HOME;' 'GNU_INC_DIR=/opt/bwhpc/common/compiler/gnu/10.2.0/include;' export 'GNU_INC_DIR;' 'GNU_LIB64_DIR=/opt/bwhpc/common/compiler/gnu/10.2.0/lib64;' export 'GNU_LIB64_DIR;' 'GNU_LIB_DIR=/opt/bwhpc/common/compiler/gnu/10.2.0/lib;' export 'GNU_LIB_DIR;' 'GNU_MAN_DIR=/opt/bwhpc/common/compiler/gnu/10.2.0/share/man;' export 'GNU_MAN_DIR;' 'GNU_VERSION=10.2.0;' export 'GNU_VERSION;' 'KIT_FAMILY_COMPILER=compiler/gnu;' export 'KIT_FAMILY_COMPILER;' 'KIT_FAMILY_COMPILER_VERSION=10.2;' export 'KIT_FAMILY_COMPILER_VERSION;' '__LMOD_REF_COUNT_LD_LIBRARY_PATH=/opt/bwhpc/common/compiler/gnu/10.2.0/lib:1\;/opt/bwhpc/common/compiler/gnu/10.2.0/lib64:1;' export '__LMOD_REF_COUNT_LD_LIBRARY_PATH;' 'LD_LIBRARY_PATH=/opt/bwhpc/common/compiler/gnu/10.2.0/lib:/opt/bwhpc/common/compiler/gnu/10.2.0/lib64;' export 'LD_LIBRARY_PATH;' 'LMOD_FAMILY_COMPILER=compiler/gnu;' export 'LMOD_FAMILY_COMPILER;' 'LMOD_FAMILY_COMPILER_VERSION=10.2;' export 'LMOD_FAMILY_COMPILER_VERSION;' 'LOADEDMODULES=compiler/gnu/10.2;' export 'LOADEDMODULES;' '__LMOD_REF_COUNT_MANPATH=/opt/bwhpc/common/compiler/gnu/10.2.0/share/man:1\;/opt/lmod/lmod/share/man:1;' export '__LMOD_REF_COUNT_MANPATH;' 'MANPATH=/opt/bwhpc/common/compiler/gnu/10.2.0/share/man:/opt/lmod/lmod/share/man::;' export 'MANPATH;' '__LMOD_REF_COUNT_MODULEPATH=/software/bwhpc/common/modulefiles/Compiler/gnu/10.2:1\;/opt/bwhpc/fr/modulefiles:1\;/opt/bwhpc/common/modulefiles/Core:1;' export '__LMOD_REF_COUNT_MODULEPATH;' 'MODULEPATH=/software/bwhpc/common/modulefiles/Compiler/gnu/10.2:/opt/bwhpc/fr/modulefiles:/opt/bwhpc/common/modulefiles/Core;' export 'MODULEPATH;' '__LMOD_REF_COUNT_PATH=/opt/bwhpc/common/compiler/gnu/10.2.0/bin:1\;/home/fr/fr_fr/fr_jf463/.local/bin:1\;/home/fr/fr_fr/fr_jf463/bin:1\;/software/all/bin:1\;/usr/share/Modules/bin:1\;/usr/local/bin:1\;/usr/bin:1\;/usr/local/sbin:1\;/usr/sbin:1;' export '__LMOD_REF_COUNT_PATH;' 'PATH=/opt/bwhpc/common/compiler/gnu/10.2.0/bin:/home/fr/fr_fr/fr_jf463/.local/bin:/home/fr/fr_fr/fr_jf463/bin:/software/all/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin;' export 'PATH;' '_LMFILES_=/opt/bwhpc/common/modulefiles/Core/compiler/gnu/10.2.lua;' export '_LMFILES_;' '_ModuleTable001_=X01vZHVsZVRhYmxlXyA9IHsKTVR2ZXJzaW9uID0gMywKY19yZWJ1aWxkVGltZSA9IGZhbHNlLApjX3Nob3J0VGltZSA9IGZhbHNlLApkZXB0aFQgPSB7fSwKZmFtaWx5ID0gewpjb21waWxlciA9ICJjb21waWxlci9nbnUiLAp9LAptVCA9IHsKWyJjb21waWxlci9nbnUiXSA9IHsKZm4gPSAiL29wdC9id2hwYy9jb21tb24vbW9kdWxlZmlsZXMvQ29yZS9jb21waWxlci9nbnUvMTAuMi5sdWEiLApmdWxsTmFtZSA9ICJjb21waWxlci9nbnUvMTAuMiIsCmxvYWRPcmRlciA9IDEsCnByb3BUID0ge30sCnN0YWNrRGVwdGggPSAwLApzdGF0dXMgPSAiYWN0aXZlIiwKdXNlck5hbWUgPSAiY29tcGlsZXIvZ251LzEwLjIiLAp3ViA9ICJeMDAwMDAwMTAuMDAwMDAwMDAyLip6ZmluYWwi;' export '_ModuleTable001_;' '_ModuleTable002_=LAp9LAp9LAptcGF0aEEgPSB7CiIvc29mdHdhcmUvYndocGMvY29tbW9uL21vZHVsZWZpbGVzL0NvbXBpbGVyL2dudS8xMC4yIgosICIvb3B0L2J3aHBjL2ZyL21vZHVsZWZpbGVzIiwgIi9vcHQvYndocGMvY29tbW9uL21vZHVsZWZpbGVzL0NvcmUiLAp9LApzeXN0ZW1CYXNlTVBBVEggPSAiL29wdC9id2hwYy9mci9tb2R1bGVmaWxlczovb3B0L2J3aHBjL2NvbW1vbi9tb2R1bGVmaWxlcy9Db3JlIiwKfQo=;' export '_ModuleTable002_;' '_ModuleTable_Sz_=2;' export '_ModuleTable_Sz_;'
+++ GNU_BIN_DIR=/opt/bwhpc/common/compiler/gnu/10.2.0/bin
+++ export GNU_BIN_DIR
+++ GNU_HOME=/opt/bwhpc/common/compiler/gnu/10.2.0
+++ export GNU_HOME
+++ GNU_INC_DIR=/opt/bwhpc/common/compiler/gnu/10.2.0/include
+++ export GNU_INC_DIR
+++ GNU_LIB64_DIR=/opt/bwhpc/common/compiler/gnu/10.2.0/lib64
+++ export GNU_LIB64_DIR
+++ GNU_LIB_DIR=/opt/bwhpc/common/compiler/gnu/10.2.0/lib
+++ export GNU_LIB_DIR
+++ GNU_MAN_DIR=/opt/bwhpc/common/compiler/gnu/10.2.0/share/man
+++ export GNU_MAN_DIR
+++ GNU_VERSION=10.2.0
+++ export GNU_VERSION
+++ KIT_FAMILY_COMPILER=compiler/gnu
+++ export KIT_FAMILY_COMPILER
+++ KIT_FAMILY_COMPILER_VERSION=10.2
+++ export KIT_FAMILY_COMPILER_VERSION
+++ __LMOD_REF_COUNT_LD_LIBRARY_PATH='/opt/bwhpc/common/compiler/gnu/10.2.0/lib:1;/opt/bwhpc/common/compiler/gnu/10.2.0/lib64:1'
+++ export __LMOD_REF_COUNT_LD_LIBRARY_PATH
+++ LD_LIBRARY_PATH=/opt/bwhpc/common/compiler/gnu/10.2.0/lib:/opt/bwhpc/common/compiler/gnu/10.2.0/lib64
+++ export LD_LIBRARY_PATH
+++ LMOD_FAMILY_COMPILER=compiler/gnu
+++ export LMOD_FAMILY_COMPILER
+++ LMOD_FAMILY_COMPILER_VERSION=10.2
+++ export LMOD_FAMILY_COMPILER_VERSION
+++ LOADEDMODULES=compiler/gnu/10.2
+++ export LOADEDMODULES
+++ __LMOD_REF_COUNT_MANPATH='/opt/bwhpc/common/compiler/gnu/10.2.0/share/man:1;/opt/lmod/lmod/share/man:1'
+++ export __LMOD_REF_COUNT_MANPATH
+++ MANPATH=/opt/bwhpc/common/compiler/gnu/10.2.0/share/man:/opt/lmod/lmod/share/man::
+++ export MANPATH
+++ __LMOD_REF_COUNT_MODULEPATH='/software/bwhpc/common/modulefiles/Compiler/gnu/10.2:1;/opt/bwhpc/fr/modulefiles:1;/opt/bwhpc/common/modulefiles/Core:1'
+++ export __LMOD_REF_COUNT_MODULEPATH
+++ MODULEPATH=/software/bwhpc/common/modulefiles/Compiler/gnu/10.2:/opt/bwhpc/fr/modulefiles:/opt/bwhpc/common/modulefiles/Core
+++ export MODULEPATH
+++ __LMOD_REF_COUNT_PATH='/opt/bwhpc/common/compiler/gnu/10.2.0/bin:1;/home/fr/fr_fr/fr_jf463/.local/bin:1;/home/fr/fr_fr/fr_jf463/bin:1;/software/all/bin:1;/usr/share/Modules/bin:1;/usr/local/bin:1;/usr/bin:1;/usr/local/sbin:1;/usr/sbin:1'
+++ export __LMOD_REF_COUNT_PATH
+++ PATH=/opt/bwhpc/common/compiler/gnu/10.2.0/bin:/home/fr/fr_fr/fr_jf463/.local/bin:/home/fr/fr_fr/fr_jf463/bin:/software/all/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+++ export PATH
+++ _LMFILES_=/opt/bwhpc/common/modulefiles/Core/compiler/gnu/10.2.lua
+++ export _LMFILES_
+++ _ModuleTable001_=X01vZHVsZVRhYmxlXyA9IHsKTVR2ZXJzaW9uID0gMywKY19yZWJ1aWxkVGltZSA9IGZhbHNlLApjX3Nob3J0VGltZSA9IGZhbHNlLApkZXB0aFQgPSB7fSwKZmFtaWx5ID0gewpjb21waWxlciA9ICJjb21waWxlci9nbnUiLAp9LAptVCA9IHsKWyJjb21waWxlci9nbnUiXSA9IHsKZm4gPSAiL29wdC9id2hwYy9jb21tb24vbW9kdWxlZmlsZXMvQ29yZS9jb21waWxlci9nbnUvMTAuMi5sdWEiLApmdWxsTmFtZSA9ICJjb21waWxlci9nbnUvMTAuMiIsCmxvYWRPcmRlciA9IDEsCnByb3BUID0ge30sCnN0YWNrRGVwdGggPSAwLApzdGF0dXMgPSAiYWN0aXZlIiwKdXNlck5hbWUgPSAiY29tcGlsZXIvZ251LzEwLjIiLAp3ViA9ICJeMDAwMDAwMTAuMDAwMDAwMDAyLip6ZmluYWwi
+++ export _ModuleTable001_
+++ _ModuleTable002_=LAp9LAp9LAptcGF0aEEgPSB7CiIvc29mdHdhcmUvYndocGMvY29tbW9uL21vZHVsZWZpbGVzL0NvbXBpbGVyL2dudS8xMC4yIgosICIvb3B0L2J3aHBjL2ZyL21vZHVsZWZpbGVzIiwgIi9vcHQvYndocGMvY29tbW9uL21vZHVsZWZpbGVzL0NvcmUiLAp9LApzeXN0ZW1CYXNlTVBBVEggPSAiL29wdC9id2hwYy9mci9tb2R1bGVmaWxlczovb3B0L2J3aHBjL2NvbW1vbi9tb2R1bGVmaWxlcy9Db3JlIiwKfQo=
+++ export _ModuleTable002_
+++ _ModuleTable_Sz_=2
+++ export _ModuleTable_Sz_
++ module load mpi/openmpi/4.1
+++ /opt/bwhpc/common/admin/modules/module-wrapper/modulecmd bash load mpi/openmpi/4.1
++ eval 'GNU_BIN_DIR=/opt/bwhpc/common/compiler/gnu/10.2.0/bin;' export 'GNU_BIN_DIR;' 'GNU_HOME=/opt/bwhpc/common/compiler/gnu/10.2.0;' export 'GNU_HOME;' 'GNU_INC_DIR=/opt/bwhpc/common/compiler/gnu/10.2.0/include;' export 'GNU_INC_DIR;' 'GNU_LIB64_DIR=/opt/bwhpc/common/compiler/gnu/10.2.0/lib64;' export 'GNU_LIB64_DIR;' 'GNU_LIB_DIR=/opt/bwhpc/common/compiler/gnu/10.2.0/lib;' export 'GNU_LIB_DIR;' 'GNU_MAN_DIR=/opt/bwhpc/common/compiler/gnu/10.2.0/share/man;' export 'GNU_MAN_DIR;' 'GNU_VERSION=10.2.0;' export 'GNU_VERSION;' 'KIT_FAMILY_COMPILER=compiler/gnu;' export 'KIT_FAMILY_COMPILER;' 'KIT_FAMILY_COMPILER_VERSION=10.2;' export 'KIT_FAMILY_COMPILER_VERSION;' '__LMOD_REF_COUNT_LD_LIBRARY_PATH=/opt/bwhpc/common/compiler/gnu/10.2.0/lib:1\;/opt/bwhpc/common/compiler/gnu/10.2.0/lib64:1\;/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/lib64:1;' export '__LMOD_REF_COUNT_LD_LIBRARY_PATH;' 'LD_LIBRARY_PATH=/opt/bwhpc/common/compiler/gnu/10.2.0/lib:/opt/bwhpc/common/compiler/gnu/10.2.0/lib64:/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/lib64;' export 'LD_LIBRARY_PATH;' 'LMOD_FAMILY_COMPILER=compiler/gnu;' export 'LMOD_FAMILY_COMPILER;' 'LMOD_FAMILY_COMPILER_VERSION=10.2;' export 'LMOD_FAMILY_COMPILER_VERSION;' 'LOADEDMODULES=compiler/gnu/10.2:mpi/openmpi/4.1;' export 'LOADEDMODULES;' '__LMOD_REF_COUNT_MANPATH=/opt/bwhpc/common/compiler/gnu/10.2.0/share/man:1\;/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/share/man:1\;/opt/lmod/lmod/share/man:1;' export '__LMOD_REF_COUNT_MANPATH;' 'MANPATH=/opt/bwhpc/common/compiler/gnu/10.2.0/share/man:/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/share/man:/opt/lmod/lmod/share/man::;' export 'MANPATH;' 'MODULEPATH=/software/bwhpc/common/modulefiles/Compiler/gnu/10.2:/opt/bwhpc/fr/modulefiles:/opt/bwhpc/common/modulefiles/Core;' export 'MODULEPATH;' 'MPIDIR=/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2;' export 'MPIDIR;' 'MPI_BIN_DIR=/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/bin;' export 'MPI_BIN_DIR;' 'MPI_EXA_DIR=/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/examples;' export 'MPI_EXA_DIR;' 'MPI_HOME=/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2;' export 'MPI_HOME;' 'MPI_INC_DIR=/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/include;' export 'MPI_INC_DIR;' 'MPI_LIB_DIR=/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/lib64;' export 'MPI_LIB_DIR;' 'MPI_MAN_DIR=/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/share/man;' export 'MPI_MAN_DIR;' 'MPI_VERSION=4.1.4-gnu-10.2;' export 'MPI_VERSION;' '__LMOD_REF_COUNT_PATH=/opt/bwhpc/common/compiler/gnu/10.2.0/bin:1\;/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/bin:1\;/home/fr/fr_fr/fr_jf463/.local/bin:1\;/home/fr/fr_fr/fr_jf463/bin:1\;/software/all/bin:1\;/usr/share/Modules/bin:1\;/usr/local/bin:1\;/usr/bin:1\;/usr/local/sbin:1\;/usr/sbin:1;' export '__LMOD_REF_COUNT_PATH;' 'PATH=/opt/bwhpc/common/compiler/gnu/10.2.0/bin:/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/bin:/home/fr/fr_fr/fr_jf463/.local/bin:/home/fr/fr_fr/fr_jf463/bin:/software/all/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin;' export 'PATH;' '_LMFILES_=/opt/bwhpc/common/modulefiles/Core/compiler/gnu/10.2.lua:/software/bwhpc/common/modulefiles/Compiler/gnu/10.2/mpi/openmpi/4.1.lua;' export '_LMFILES_;' '_ModuleTable001_=X01vZHVsZVRhYmxlXyA9IHsKTVR2ZXJzaW9uID0gMywKY19yZWJ1aWxkVGltZSA9IGZhbHNlLApjX3Nob3J0VGltZSA9IGZhbHNlLApkZXB0aFQgPSB7fSwKZmFtaWx5ID0gewpjb21waWxlciA9ICJjb21waWxlci9nbnUiLAp9LAptVCA9IHsKWyJjb21waWxlci9nbnUiXSA9IHsKZm4gPSAiL29wdC9id2hwYy9jb21tb24vbW9kdWxlZmlsZXMvQ29yZS9jb21waWxlci9nbnUvMTAuMi5sdWEiLApmdWxsTmFtZSA9ICJjb21waWxlci9nbnUvMTAuMiIsCmxvYWRPcmRlciA9IDEsCnByb3BUID0ge30sCnN0YWNrRGVwdGggPSAxLApzdGF0dXMgPSAiYWN0aXZlIiwKdXNlck5hbWUgPSAiY29tcGlsZXIvZ251LzEwLjIiLAp3ViA9ICJeMDAwMDAwMTAuMDAwMDAwMDAyLip6ZmluYWwi;' export '_ModuleTable001_;' '_ModuleTable002_=LAp9LApbIm1waS9vcGVubXBpIl0gPSB7CmZuID0gIi9zb2Z0d2FyZS9id2hwYy9jb21tb24vbW9kdWxlZmlsZXMvQ29tcGlsZXIvZ251LzEwLjIvbXBpL29wZW5tcGkvNC4xLmx1YSIsCmZ1bGxOYW1lID0gIm1waS9vcGVubXBpLzQuMSIsCmxvYWRPcmRlciA9IDIsCnByb3BUID0ge30sCnN0YWNrRGVwdGggPSAwLApzdGF0dXMgPSAiYWN0aXZlIiwKdXNlck5hbWUgPSAibXBpL29wZW5tcGkvNC4xIiwKd1YgPSAiMDAwMDAwMDA0LjAwMDAwMDAwMS4qemZpbmFsIiwKfSwKfSwKbXBhdGhBID0gewoiL3NvZnR3YXJlL2J3aHBjL2NvbW1vbi9tb2R1bGVmaWxlcy9Db21waWxlci9nbnUvMTAuMiIKLCAiL29wdC9id2hwYy9mci9tb2R1bGVmaWxlcyIsICIvb3B0L2J3aHBjL2NvbW1v;' export '_ModuleTable002_;' '_ModuleTable003_=bi9tb2R1bGVmaWxlcy9Db3JlIiwKfSwKc3lzdGVtQmFzZU1QQVRIID0gIi9vcHQvYndocGMvZnIvbW9kdWxlZmlsZXM6L29wdC9id2hwYy9jb21tb24vbW9kdWxlZmlsZXMvQ29yZSIsCn0K;' export '_ModuleTable003_;' '_ModuleTable_Sz_=3;' export '_ModuleTable_Sz_;'
+++ GNU_BIN_DIR=/opt/bwhpc/common/compiler/gnu/10.2.0/bin
+++ export GNU_BIN_DIR
+++ GNU_HOME=/opt/bwhpc/common/compiler/gnu/10.2.0
+++ export GNU_HOME
+++ GNU_INC_DIR=/opt/bwhpc/common/compiler/gnu/10.2.0/include
+++ export GNU_INC_DIR
+++ GNU_LIB64_DIR=/opt/bwhpc/common/compiler/gnu/10.2.0/lib64
+++ export GNU_LIB64_DIR
+++ GNU_LIB_DIR=/opt/bwhpc/common/compiler/gnu/10.2.0/lib
+++ export GNU_LIB_DIR
+++ GNU_MAN_DIR=/opt/bwhpc/common/compiler/gnu/10.2.0/share/man
+++ export GNU_MAN_DIR
+++ GNU_VERSION=10.2.0
+++ export GNU_VERSION
+++ KIT_FAMILY_COMPILER=compiler/gnu
+++ export KIT_FAMILY_COMPILER
+++ KIT_FAMILY_COMPILER_VERSION=10.2
+++ export KIT_FAMILY_COMPILER_VERSION
+++ __LMOD_REF_COUNT_LD_LIBRARY_PATH='/opt/bwhpc/common/compiler/gnu/10.2.0/lib:1;/opt/bwhpc/common/compiler/gnu/10.2.0/lib64:1;/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/lib64:1'
+++ export __LMOD_REF_COUNT_LD_LIBRARY_PATH
+++ LD_LIBRARY_PATH=/opt/bwhpc/common/compiler/gnu/10.2.0/lib:/opt/bwhpc/common/compiler/gnu/10.2.0/lib64:/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/lib64
+++ export LD_LIBRARY_PATH
+++ LMOD_FAMILY_COMPILER=compiler/gnu
+++ export LMOD_FAMILY_COMPILER
+++ LMOD_FAMILY_COMPILER_VERSION=10.2
+++ export LMOD_FAMILY_COMPILER_VERSION
+++ LOADEDMODULES=compiler/gnu/10.2:mpi/openmpi/4.1
+++ export LOADEDMODULES
+++ __LMOD_REF_COUNT_MANPATH='/opt/bwhpc/common/compiler/gnu/10.2.0/share/man:1;/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/share/man:1;/opt/lmod/lmod/share/man:1'
+++ export __LMOD_REF_COUNT_MANPATH
+++ MANPATH=/opt/bwhpc/common/compiler/gnu/10.2.0/share/man:/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/share/man:/opt/lmod/lmod/share/man::
+++ export MANPATH
+++ MODULEPATH=/software/bwhpc/common/modulefiles/Compiler/gnu/10.2:/opt/bwhpc/fr/modulefiles:/opt/bwhpc/common/modulefiles/Core
+++ export MODULEPATH
+++ MPIDIR=/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2
+++ export MPIDIR
+++ MPI_BIN_DIR=/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/bin
+++ export MPI_BIN_DIR
+++ MPI_EXA_DIR=/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/examples
+++ export MPI_EXA_DIR
+++ MPI_HOME=/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2
+++ export MPI_HOME
+++ MPI_INC_DIR=/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/include
+++ export MPI_INC_DIR
+++ MPI_LIB_DIR=/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/lib64
+++ export MPI_LIB_DIR
+++ MPI_MAN_DIR=/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/share/man
+++ export MPI_MAN_DIR
+++ MPI_VERSION=4.1.4-gnu-10.2
+++ export MPI_VERSION
+++ __LMOD_REF_COUNT_PATH='/opt/bwhpc/common/compiler/gnu/10.2.0/bin:1;/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/bin:1;/home/fr/fr_fr/fr_jf463/.local/bin:1;/home/fr/fr_fr/fr_jf463/bin:1;/software/all/bin:1;/usr/share/Modules/bin:1;/usr/local/bin:1;/usr/bin:1;/usr/local/sbin:1;/usr/sbin:1'
+++ export __LMOD_REF_COUNT_PATH
+++ PATH=/opt/bwhpc/common/compiler/gnu/10.2.0/bin:/opt/bwhpc/common/mpi/openmpi/4.1.4-gnu-10.2/bin:/home/fr/fr_fr/fr_jf463/.local/bin:/home/fr/fr_fr/fr_jf463/bin:/software/all/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+++ export PATH
+++ _LMFILES_=/opt/bwhpc/common/modulefiles/Core/compiler/gnu/10.2.lua:/software/bwhpc/common/modulefiles/Compiler/gnu/10.2/mpi/openmpi/4.1.lua
+++ export _LMFILES_
+++ _ModuleTable001_=X01vZHVsZVRhYmxlXyA9IHsKTVR2ZXJzaW9uID0gMywKY19yZWJ1aWxkVGltZSA9IGZhbHNlLApjX3Nob3J0VGltZSA9IGZhbHNlLApkZXB0aFQgPSB7fSwKZmFtaWx5ID0gewpjb21waWxlciA9ICJjb21waWxlci9nbnUiLAp9LAptVCA9IHsKWyJjb21waWxlci9nbnUiXSA9IHsKZm4gPSAiL29wdC9id2hwYy9jb21tb24vbW9kdWxlZmlsZXMvQ29yZS9jb21waWxlci9nbnUvMTAuMi5sdWEiLApmdWxsTmFtZSA9ICJjb21waWxlci9nbnUvMTAuMiIsCmxvYWRPcmRlciA9IDEsCnByb3BUID0ge30sCnN0YWNrRGVwdGggPSAxLApzdGF0dXMgPSAiYWN0aXZlIiwKdXNlck5hbWUgPSAiY29tcGlsZXIvZ251LzEwLjIiLAp3ViA9ICJeMDAwMDAwMTAuMDAwMDAwMDAyLip6ZmluYWwi
+++ export _ModuleTable001_
+++ _ModuleTable002_=LAp9LApbIm1waS9vcGVubXBpIl0gPSB7CmZuID0gIi9zb2Z0d2FyZS9id2hwYy9jb21tb24vbW9kdWxlZmlsZXMvQ29tcGlsZXIvZ251LzEwLjIvbXBpL29wZW5tcGkvNC4xLmx1YSIsCmZ1bGxOYW1lID0gIm1waS9vcGVubXBpLzQuMSIsCmxvYWRPcmRlciA9IDIsCnByb3BUID0ge30sCnN0YWNrRGVwdGggPSAwLApzdGF0dXMgPSAiYWN0aXZlIiwKdXNlck5hbWUgPSAibXBpL29wZW5tcGkvNC4xIiwKd1YgPSAiMDAwMDAwMDA0LjAwMDAwMDAwMS4qemZpbmFsIiwKfSwKfSwKbXBhdGhBID0gewoiL3NvZnR3YXJlL2J3aHBjL2NvbW1vbi9tb2R1bGVmaWxlcy9Db21waWxlci9nbnUvMTAuMiIKLCAiL29wdC9id2hwYy9mci9tb2R1bGVmaWxlcyIsICIvb3B0L2J3aHBjL2NvbW1v
+++ export _ModuleTable002_
+++ _ModuleTable003_=bi9tb2R1bGVmaWxlcy9Db3JlIiwKfSwKc3lzdGVtQmFzZU1QQVRIID0gIi9vcHQvYndocGMvZnIvbW9kdWxlZmlsZXM6L29wdC9id2hwYy9jb21tb24vbW9kdWxlZmlsZXMvQ29yZSIsCn0K
+++ export _ModuleTable003_
+++ _ModuleTable_Sz_=3
+++ export _ModuleTable_Sz_
++ echo 'Running on 4 nodes with 80(x4) cores each.'
++ echo 'Each node has 90000 of memory allocated to this job.'
++ mpirun ./09 whisker_large.xyz traj_large.xyz 4 4 10
+slurmstepd: error: *** JOB 22567982 ON uc2n009 CANCELLED AT 2023-08-29T12:05:53 DUE TO TIME LIMIT ***
