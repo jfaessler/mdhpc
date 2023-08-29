@@ -15,13 +15,13 @@ int main(int argc, char *argv[]) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     constexpr double timestep = 5.0;
-    constexpr int steps = 60001;
+    constexpr int steps = 160001; // TODO much longer splitting or faster strain, and further domain decomposition
     constexpr int snapshot_interval = steps / 100; // 100 total frames
     constexpr double cutoff = 10.0;
     constexpr int eq_steps = 10000;
     constexpr double eq_temp = 100.0;
     constexpr double eq_relax = 100.0;
-    constexpr double strain_rate = 0.001; // Strain per frame
+    constexpr double strain_rate = 0.002; // Strain per frame
     double original_length;
 
     NeighborList neighborList;
@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
         20413.15887; // Gold in system's mass units where g/mol = 0.009649
     Atoms atoms(init_positions, gold_mass);
     atoms.k_b = 8.617333262e-5; // Boltzmann constant in eV/K
-    Domain domain(MPI_COMM_WORLD, {80.77987868, 81.59999999, 288.49956672}, {2, 2, 10},
+    Domain domain(MPI_COMM_WORLD, {80.77987868, 81.59999999, 288.49956672}, {4, 4, 10},
                   {0, 0, 1});
     domain.enable(atoms);
     domain.exchange_atoms(atoms);
