@@ -209,10 +209,10 @@ if __name__ == '__main__':
     files.sort()
     for filename in files:
         reports.append(Run(filename))
-    # for report in reports:
-    # energy_time(report)
-    # temperature_step(report)
-    # stress_strain(report)
+    for report in reports:
+        # energy_time(report)
+        # temperature_step(report)
+        stress_strain(report)
     cap_size(reports)
     files = []
     reports = []
