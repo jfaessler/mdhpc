@@ -10,17 +10,20 @@
 
 int main(int argc, char *argv[]) {
     std::string filename;
+    std::string out_filename;
     int domain_x;
     int domain_y;
     int domain_z;
-    if (argc > 4) {
+    if (argc > 5) {
         filename = argv[1];
-        domain_x = static_cast<int>(strtol(argv[2], nullptr, 10));
-        domain_y = static_cast<int>(strtol(argv[3], nullptr, 10));
-        domain_z = static_cast<int>(strtol(argv[4], nullptr, 10));
+        out_filename = argv[2];
+        domain_x = static_cast<int>(strtol(argv[3], nullptr, 10));
+        domain_y = static_cast<int>(strtol(argv[4], nullptr, 10));
+        domain_z = static_cast<int>(strtol(argv[5], nullptr, 10));
     }
     else {
         filename = "whisker_small.xyz";
+        out_filename = "traj.xyz";
         domain_x = 2;
         domain_y = 2;
         domain_z = 10;
@@ -57,7 +60,7 @@ int main(int argc, char *argv[]) {
     // Perform IO on one rank to avoid duplicates
     std::ofstream *traj = nullptr;
     if (rank == 0) {
-        traj = new std::ofstream("traj.xyz");
+        traj = new std::ofstream(out_filename);
         std::cout << "Step,Time,Total "
                      "Energy,Potential,Kinetic,Temperature,Strain,Stress"
                   << std::endl;

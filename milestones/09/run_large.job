@@ -14,4 +14,4 @@ module load mpi/openmpi/4.1
 
 echo "Running on ${SLURM_JOB_NUM_NODES} nodes with ${SLURM_JOB_CPUS_PER_NODE} cores each."
 echo "Each node has ${SLURM_MEM_PER_NODE} of memory allocated to this job."
-time mpirun ./09 whisker_large.xyz 4 4 10
+time mpirun ./09 whisker_large.xyz traj_large.xyz 4 4 10
