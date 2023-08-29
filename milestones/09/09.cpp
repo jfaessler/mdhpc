@@ -9,7 +9,22 @@
 #include <iostream>
 
 int main(int argc, char *argv[]) {
-    std::string filename = "whisker_large.xyz";
+    std::string filename;
+    int domain_x;
+    int domain_y;
+    int domain_z;
+    if (argc > 4) {
+        filename = argv[1];
+        domain_x = static_cast<int>(strtol(argv[2], nullptr, 10));
+        domain_y = static_cast<int>(strtol(argv[3], nullptr, 10));
+        domain_z = static_cast<int>(strtol(argv[4], nullptr, 10));
+    }
+    else {
+        filename = "whisker_small.xyz";
+        domain_x = 2;
+        domain_y = 2;
+        domain_z = 10;
+    }
     MPI_Init(&argc, &argv);
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -31,7 +46,7 @@ int main(int argc, char *argv[]) {
         20413.15887; // Gold in system's mass units where g/mol = 0.009649
     Atoms atoms(init_positions, gold_mass);
     atoms.k_b = 8.617333262e-5; // Boltzmann constant in eV/K
-    Domain domain(MPI_COMM_WORLD, {80.77987868, 81.59999999, 288.49956672}, {4, 4, 10},
+    Domain domain(MPI_COMM_WORLD, {80.77987868, 81.59999999, 288.49956672}, {domain_x, domain_y, domain_z},
                   {0, 0, 1});
     domain.enable(atoms);
     domain.exchange_atoms(atoms);
