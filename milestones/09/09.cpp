@@ -33,12 +33,12 @@ int main(int argc, char *argv[]) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     constexpr double timestep = 5.0;
-    constexpr int steps = 160001; // TODO much longer splitting or faster strain, and further domain decomposition
+    constexpr int steps = 160001;
     constexpr int snapshot_interval = steps / 100; // 100 total frames
     constexpr double cutoff = 10.0;
     constexpr int eq_steps = 10000;
-    constexpr double eq_temp = 100.0;
-    constexpr double eq_relax = 100.0;
+    constexpr double eq_temp = 500.0;
+    constexpr double eq_relax = 4000.0;
     constexpr double strain_rate = 0.002; // Strain per frame
     double original_length;
 
@@ -78,7 +78,9 @@ int main(int argc, char *argv[]) {
         double pot = ducastelle(atoms, neighborList, cutoff);
         verlet_step2(atoms.velocities, atoms.forces, timestep, atoms.mass);
         if (i < eq_steps) {
-//            berendsen_thermostat(atoms, eq_temp, timestep, eq_relax);
+            if (i < eq_steps / 2) {
+                berendsen_thermostat(atoms, eq_temp, timestep, eq_relax);
+            }
         } else {
             domain.scale(atoms, {len[0], len[1], len[2] + strain_rate});
         }
