@@ -42,7 +42,9 @@ class Run:
 
 
 def energy_time(report: Run):
-    plt.plot(report.data['Step'], report.data['Temperature'])
+    plt.plot(report.data['Time'], report.data['Total Energy'])
+    plt.xlabel('Time (fs)')
+    plt.ylabel('Total Energy (eV)')
     plt.tight_layout()
     plt.show()
 
@@ -221,9 +223,10 @@ if __name__ == '__main__':
     for filename in files:
         reports.append(Run(filename))
     for report in reports:
-        # energy_time(report)
+        energy_time(report)
         # temperature_step(report)
-        stress_strain(report)
+        # if 'stress' in report.data.keys():
+        #     stress_strain(report)
     # cap_size(reports)
     files = []
     reports = []

@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-    constexpr double timestep = 15.0;
+    constexpr double timestep = 0.1;
     constexpr int steps = 50001;
     constexpr int snapshot_interval = steps / 100; // 100 total frames
     constexpr double cutoff = 5.0;
@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     init_positions += 2.; // Shift away from origin to add a little margin to domain
     Atoms atoms(init_positions, gold_mass);
     atoms.k_b = 8.617333262e-5; // Boltzmann constant in eV/K
-    Domain domain(MPI_COMM_WORLD, {52, 52, 52}, {3, 2, 1}, {0, 0, 0});
+    Domain domain(MPI_COMM_WORLD, {52, 52, 52}, {2, 2, 1}, {0, 0, 0});
     domain.enable(atoms);
     domain.exchange_atoms(atoms);
     domain.update_ghosts(atoms, 2 * cutoff);

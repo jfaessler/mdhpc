@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
     Atoms atoms(init_positions, gold_mass);
     atoms.k_b = 8.617333262e-5; // Boltzmann constant in eV/K
 
-    const double cutoff = 5.0; // Default cutoff from ducastelle
+    const double cutoff = 5.0;
     NeighborList neighborList;
     neighborList.update(atoms, cutoff);
 
