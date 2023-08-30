@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
             ducastelle(atoms, neighborList, cutoff);
             verlet_step2(atoms.velocities, atoms.forces, eq_timestep, atoms.mass);
             if (i < eq_steps_thermostat)
-                berendsen_thermostat(atoms, eq_temp, timestep, eq_relax);
+                berendsen_thermostat(atoms, eq_temp, eq_timestep, eq_relax);
         } else {
             verlet_step1(atoms.positions, atoms.velocities, atoms.forces,
                          timestep, atoms.mass);
