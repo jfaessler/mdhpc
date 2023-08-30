@@ -12,11 +12,18 @@ int main(int argc, char *argv[]) {
     } else {
         timestep = 1.;
     }
-    int steps = static_cast<int>(500. / timestep);
+    constexpr int eq_steps_thermostat = 4000;
+    constexpr int eq_steps_release = 4000;
+    constexpr int eq_steps = eq_steps_thermostat + eq_steps_release;
+    constexpr double eq_timestep = 15;
+    constexpr double eq_temp = 500.0;
+    constexpr double eq_relax = 10000.0;
+    int steps = static_cast<int>(5000. / timestep);
+    int snapshot_interval = steps > 100 ? steps / 100 : 1;
     std::ofstream traj("traj.xyz");
     std::ofstream ts(std::to_string(timestep) + ".timestep");
 
-    auto [names, init_positions]{read_xyz("cluster_923.xyz")};
+    auto [names, init_positions]{read_xyz("cluster_eq.xyz")};
     double gold_mass =
         20413.15887; // Gold in system's mass units where [m] = 0.009649 g/mol
     Atoms atoms(init_positions, gold_mass);
@@ -28,22 +35,35 @@ int main(int argc, char *argv[]) {
 
     write_xyz(traj, atoms);
 
-    std::cout << "Time,Total Energy,Potential,Kinetic,Temperature" << std::endl;
-    std::cout.precision(10);
+    ts << "#PARAMS:Timestep=" << timestep << std::endl;
     ts << "Time,Total Energy" << std::endl;
     ts.precision(10);
-    for (int i = 0; i < steps; ++i) {
-        verlet_step1(atoms.positions, atoms.velocities, atoms.forces, timestep, atoms.mass);
-        neighborList.update(atoms, cutoff);
-        double pot = ducastelle(atoms, neighborList, cutoff);
-        verlet_step2(atoms.velocities, atoms.forces, timestep, atoms.mass);
+    for (int i = 0; i < steps + eq_steps; ++i) {
+        if (i < eq_steps) {
+            verlet_step1(atoms.positions, atoms.velocities, atoms.forces,
+                         eq_timestep, atoms.mass);
+            neighborList.update(atoms, cutoff);
+            ducastelle(atoms, neighborList, cutoff);
+            verlet_step2(atoms.velocities, atoms.forces, eq_timestep, atoms.mass);
+            if (i < eq_steps_thermostat)
+                berendsen_thermostat(atoms, eq_temp, timestep, eq_relax);
+        } else {
+            verlet_step1(atoms.positions, atoms.velocities, atoms.forces,
+                         timestep, atoms.mass);
+            neighborList.update(atoms, cutoff);
+            double pot = ducastelle(atoms, neighborList, cutoff);
+            verlet_step2(atoms.velocities, atoms.forces, timestep, atoms.mass);
 
-        write_xyz(traj, atoms);
-        auto kinetic = Eigen::pow(atoms.velocities, 2).sum() / 2;
-        std::cout << (i + 1) * timestep << "," << pot + kinetic << ","
-                  << pot << "," << kinetic << "," << temperature(atoms) << std::endl;
-        ts << (i + 1) * timestep << ","
-           << pot + kinetic << std::endl;
+            if (i % snapshot_interval == 0) {
+                write_xyz(traj, atoms);
+                auto kinetic = Eigen::pow(atoms.velocities, 2).sum() / 2;
+                std::cout << (i - eq_steps + 1) * timestep << ","
+                          << pot + kinetic << "," << pot << "," << kinetic
+                          << "," << temperature(atoms) << std::endl;
+                ts << (i - eq_steps + 1) * timestep << "," << pot + kinetic
+                   << std::endl;
+            }
+        }
     }
 
     traj.close();

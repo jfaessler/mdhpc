@@ -222,8 +222,8 @@ if __name__ == '__main__':
     files.sort()
     for filename in files:
         reports.append(Run(filename))
-    for report in reports:
-        energy_time(report)
+    # for report in reports:
+    #     energy_time(report)
         # temperature_step(report)
         # if 'stress' in report.data.keys():
         #     stress_strain(report)
@@ -235,6 +235,9 @@ if __name__ == '__main__':
     files.sort()
     for filename in files:
         reports.append(Run(filename))
+    # for report in reports:
+    #     energy_time(report)
+    energy_time_4(reports, 30)
     # energy_time_4(reports, 0.03)
     # energy_time_4(reports, 0.05)
     # energy_time_4(reports, 1.0)
