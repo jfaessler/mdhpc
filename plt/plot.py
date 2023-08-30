@@ -96,13 +96,20 @@ def cap_size(reports):
     for report in reports:
         # Rescale energy to be 0 at the start
         initial_energy = report.data['Kinetic'][0] + report.data['Potential'][0]
-        e = np.array(np.array(report.data['Kinetic']) + np.array(report.data['Potential']) - initial_energy)
+        e_added = np.array(np.array(report.data['Kinetic']) + np.array(report.data['Potential']) - initial_energy)
         T = np.array(report.data['Average Temperature'])
+        plt.plot(T, report.data['Potential'], label='Potential Energy')
+        plt.plot(T, np.array(report.data['Kinetic']) + np.array(report.data['Potential']), label='Total Energy')
+        plt.xlabel('Temperature (K)')
+        plt.ylabel('Energy (eV)')
+        plt.legend()
+        plt.tight_layout()
+        plt.show()
         size.append(report.params['size'])
-        heat_opt, pcov = curve_fit(heat_curve, e, T, p0=[size[-1] / 10 - 20, size[-1] / 5 - 20, 1, 1, 1])
+        heat_opt, pcov = curve_fit(heat_curve, e_added, T, p0=[size[-1] / 10 - 20, size[-1] / 5 - 20, 1, 1, 1])
         latent_heat.append(heat_opt[1] - heat_opt[0])
-        plt.plot(e, heat_curve(e, *heat_opt), label='Fitted Equation')
-        plt.plot(e, T, label='Observed Temperature')
+        plt.plot(e_added, heat_curve(e_added, *heat_opt), label='Fitted Equation')
+        plt.plot(e_added, T, label='Observed Temperature')
         plt.legend()
         plt.xlabel('Energy Added (eV)')
         plt.ylabel('Temperature (K)')
@@ -144,9 +151,13 @@ def stress_strain(report):
     s = np.array(report.data['Step'])
     s /= 1000
     plt.plot(s, report.data['Stress'])
+    plt.xlabel("Simulation Step")
+    plt.ylabel("Stress (eV / \u212b^3)")
     plt.tight_layout()
     plt.show()
-    plt.plot(report.data['Strain'], report.data['Stress'])
+    plt.plot(report.data['Strain'][6:], report.data['Stress'][6:])
+    plt.xlabel("Strain \u03b5")
+    plt.ylabel("Stress \u03c3 (eV / \u212b^3)")
     plt.tight_layout()
     plt.show()
 
@@ -201,7 +212,7 @@ def scaling_neighbor():
 
 
 if __name__ == '__main__':
-    scaling_neighbor()
+    # scaling_neighbor()
     files = []
     reports = []
     for filename in glob.glob("*.csv"):
@@ -213,7 +224,7 @@ if __name__ == '__main__':
         # energy_time(report)
         # temperature_step(report)
         stress_strain(report)
-    cap_size(reports)
+    # cap_size(reports)
     files = []
     reports = []
     for filename in glob.glob("*.timestep"):
