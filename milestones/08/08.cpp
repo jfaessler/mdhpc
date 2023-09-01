@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-    constexpr double timestep = 0.1;
+    constexpr double timestep = 15.0;
     constexpr int steps = 50001;
     constexpr int snapshot_interval = steps / 100; // 100 total frames
     constexpr double cutoff = 5.0;
