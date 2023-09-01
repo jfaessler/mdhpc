@@ -33,13 +33,13 @@ int main(int argc, char *argv[]) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     constexpr double timestep = 5.0;
-    constexpr int steps = 160001;
+    constexpr int steps = 60001;
     constexpr int snapshot_interval = steps / 100; // 100 total frames
     constexpr double cutoff = 10.0;
     constexpr int eq_steps = 10000;
     constexpr double eq_temp = 500.0;
-    constexpr double eq_relax = 4000.0;
-    constexpr double strain_rate = 0.002; // Strain per frame
+    constexpr double eq_relax = 20.0;
+    constexpr double strain_rate = 0.0004; // Strain per frame
     double original_length;
 
     NeighborList neighborList;
@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
         20413.15887; // Gold in system's mass units where g/mol = 0.009649
     Atoms atoms(init_positions, gold_mass);
     atoms.k_b = 8.617333262e-5; // Boltzmann constant in eV/K
-    Domain domain(MPI_COMM_WORLD, {80.77987868, 81.59999999, 288.49956672}, {domain_x, domain_y, domain_z},
+    Domain domain(MPI_COMM_WORLD, {40.38993934, 49.799999999, 144.24978336}, {domain_x, domain_y, domain_z},
                   {0, 0, 1});
     domain.enable(atoms);
     domain.exchange_atoms(atoms);
@@ -78,8 +78,15 @@ int main(int argc, char *argv[]) {
         double pot = ducastelle(atoms, neighborList, cutoff);
         verlet_step2(atoms.velocities, atoms.forces, timestep, atoms.mass);
         if (i < eq_steps) {
-            if (i < eq_steps / 2) {
-                berendsen_thermostat(atoms, eq_temp, timestep, eq_relax);
+            if (i < eq_steps / 2 && i % (eq_steps / 10) == 0) {
+                domain.disable(atoms);
+                    if (rank == 0) {
+                        auto t = temperature(atoms);
+                        std::cout << temperature(atoms) << ", ";
+                        atoms.velocities *= sqrt((t + 150) / t);
+                        std::cout << temperature(atoms) << std::endl;
+                    }
+                domain.enable(atoms);
             }
         } else {
             domain.scale(atoms, {len[0], len[1], len[2] + strain_rate});
