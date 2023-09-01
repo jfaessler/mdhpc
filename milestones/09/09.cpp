@@ -33,13 +33,13 @@ int main(int argc, char *argv[]) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     constexpr double timestep = 5.0;
-    constexpr int steps = 160001;
+    constexpr int steps = 80001;
     constexpr int snapshot_interval = steps / 100; // 100 total frames
     constexpr double cutoff = 10.0;
     constexpr int eq_steps = 10000;
     constexpr double eq_temp = 500.0;
     constexpr double eq_relax = 20.0;
-    constexpr double strain_rate = 0.0005; // Strain per frame
+    constexpr double strain_rate = 0.0015; // Strain per frame
     double original_length;
 
     NeighborList neighborList;
@@ -82,9 +82,7 @@ int main(int argc, char *argv[]) {
                 domain.disable(atoms);
                     if (rank == 0) {
                         auto t = temperature(atoms);
-                        std::cout << temperature(atoms) << ", ";
                         atoms.velocities *= sqrt((t + 150) / t);
-                        std::cout << temperature(atoms) << std::endl;
                     }
                 domain.enable(atoms);
             }
@@ -92,9 +90,6 @@ int main(int argc, char *argv[]) {
             domain.scale(atoms, {len[0], len[1], len[2] + strain_rate});
         }
 
-        //        if (domain.rank() == 0) {
-        //            std::cout << "Step:" << i << std::endl;
-        //        }
         if (i % snapshot_interval == 0) {
             domain.exchange_atoms(atoms);
             domain.update_ghosts(atoms, 2 * cutoff);
@@ -114,25 +109,14 @@ int main(int argc, char *argv[]) {
             Eigen::Matrix3d stress;
             stress.setZero();
             if (domain.rank() == 0) {
-                //                                std::cout << recv <<
-                //                                std::endl;
                 for (int d = 0; d < domain.size(); d++) {
                     stress += recv.block<3, 3>(0, d * 3);
                 }
-                //                std::cout << stress(2,2) << std::endl;
             }
-            //            MPI_Comm comm = domain.communicator();
-            //            MPI::Eigen::allgather(stress, recv, comm); // This
-            //            part does not work
             domain.disable(atoms);
             if (traj != nullptr) {
                 assert(rank == 0);
                 write_xyz(*traj, atoms);
-                // Slower cheaty way of only measuring potentials of non-ghost
-                // atoms for write operations
-                //                neighborList.update(atoms, cutoff);
-                //                double pot = ducastelle(atoms, neighborList,
-                //                cutoff);
                 auto kinetic = kinetic_energy(atoms);
                 std::cout << i << "," << (i)*timestep << "," << pot + kinetic
                           << "," << pot << "," << kinetic << ","
