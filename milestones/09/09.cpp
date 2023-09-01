@@ -37,9 +37,7 @@ int main(int argc, char *argv[]) {
     constexpr int snapshot_interval = steps / 100; // 100 total frames
     constexpr double cutoff = 10.0;
     constexpr int eq_steps = 10000;
-    constexpr double eq_temp = 500.0;
-    constexpr double eq_relax = 20.0;
-    constexpr double strain_rate = 0.0015; // Strain per frame
+    constexpr double strain_rate = 0.0005; // Strain per frame
     double original_length;
 
     NeighborList neighborList;

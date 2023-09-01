@@ -25,6 +25,11 @@ class Run:
                         for param in params_line:
                             k, v = param.split('=')
                             self.params[k] = float(v)
+                    elif line[0:6] == "#STRS:":
+                        params_line = line[6:].replace('\n', '').split(',')
+                        for param in params_line:
+                            k, v = param.split('=')
+                            self.params[k] = v
                     continue
                 if label_line is None:
                     label_line = line.replace('\n', '').split(',')
@@ -164,6 +169,16 @@ def stress_strain(report):
     plt.show()
 
 
+def stress_strain_compare(reports):
+    for report in reports:
+        plt.plot(report.data['Strain'][6:], report.data['Stress'][6:], label=report.params['name'])
+    plt.xlabel("Strain \u03b5")
+    plt.ylabel("Stress \u03c3 (eV / \u212b^3)")
+    plt.tight_layout()
+    plt.legend()
+    plt.show()
+
+
 def energy_time_4(reports: List[Run], max_timestep: float):
     for report in reports:
         if report.params['Timestep'] < max_timestep:
@@ -222,22 +237,24 @@ if __name__ == '__main__':
     files.sort()
     for filename in files:
         reports.append(Run(filename))
-    for report in reports:
-        energy_time(report)
-        # temperature_step(report)
-        # if 'stress' in report.data.keys():
-        #     stress_strain(report)
-    # cap_size(reports)
-    files = []
-    reports = []
-    for filename in glob.glob("*.timestep"):
-        files.append(filename)
-    files.sort()
-    for filename in files:
-        reports.append(Run(filename))
+    stress_strain_compare(reports)
     # for report in reports:
     #     energy_time(report)
-    energy_time_4(reports, 30)
+    #     temperature_step(report)
+    #     if 'stress' in report.data.keys():
+    #         stress_strain(report)
+    # cap_size(reports)
+
+    # files = []
+    # reports = []
+    # for filename in glob.glob("*.timestep"):
+    #     files.append(filename)
+    # files.sort()
+    # for filename in files:
+    #     reports.append(Run(filename))
+    # for report in reports:
+    #     energy_time(report)
+    # energy_time_4(reports, 30)
     # energy_time_4(reports, 0.03)
     # energy_time_4(reports, 0.05)
     # energy_time_4(reports, 1.0)
