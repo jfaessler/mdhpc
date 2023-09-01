@@ -78,14 +78,6 @@ int main(int argc, char *argv[]) {
         double pot = ducastelle(atoms, neighborList, cutoff);
         verlet_step2(atoms.velocities, atoms.forces, timestep, atoms.mass);
         if (i < eq_steps) {
-            if (i < eq_steps / 2 && i % (eq_steps / 20) == 0) {
-                domain.disable(atoms);
-                    if (rank == 0) {
-                        auto t = temperature(atoms);
-                        atoms.velocities *= sqrt((t + 150) / t);
-                    }
-                domain.enable(atoms);
-            }
         } else {
             domain.scale(atoms, {len[0], len[1], len[2] + strain_rate});
         }
