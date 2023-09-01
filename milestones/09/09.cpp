@@ -33,13 +33,13 @@ int main(int argc, char *argv[]) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     constexpr double timestep = 5.0;
-    constexpr int steps = 60001;
+    constexpr int steps = 160001;
     constexpr int snapshot_interval = steps / 100; // 100 total frames
     constexpr double cutoff = 10.0;
     constexpr int eq_steps = 10000;
     constexpr double eq_temp = 500.0;
     constexpr double eq_relax = 20.0;
-    constexpr double strain_rate = 0.0004; // Strain per frame
+    constexpr double strain_rate = 0.0005; // Strain per frame
     double original_length;
 
     NeighborList neighborList;
@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
         double pot = ducastelle(atoms, neighborList, cutoff);
         verlet_step2(atoms.velocities, atoms.forces, timestep, atoms.mass);
         if (i < eq_steps) {
-            if (i < eq_steps / 2 && i % (eq_steps / 10) == 0) {
+            if (i < eq_steps / 2 && i % (eq_steps / 20) == 0) {
                 domain.disable(atoms);
                     if (rank == 0) {
                         auto t = temperature(atoms);
